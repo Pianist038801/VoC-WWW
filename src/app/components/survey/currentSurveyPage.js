@@ -37,12 +37,12 @@ class CurrentSurveyPage extends Component {
       for (let j = 0; j < question.Input.length; j++)
       {
         const tag = question.Input[j]
-        if (tag.enabled == true)
+        if (tag.enabled != false)
           questionTag.push(
             <li>
               <span className="text-lightblue">{tag.Value}</span>
               <label className="switch">
-                <input type="checkbox" checked onChange={() => this.props.dispatch({ type: 'toggleQuestion', index: j })} />
+                <input type="checkbox" checked onChange={() => this.props.dispatch({ type: 'TOGGLE_QUESTION', questionIndex: i, tagIndex: j })} />
                 <span className="slider-round"></span>
               </label>
               <span className="text-lightblue">Go to</span>
@@ -56,7 +56,7 @@ class CurrentSurveyPage extends Component {
             <li>
               <span className="text-lightblue">{tag.Value}</span>
               <label className="switch">
-                <input type="checkbox" onChange={() => this.props.dispatch({ type: 'toggleQuestion', index: j })} />
+                <input type="checkbox" onChange={() => this.props.dispatch({ type: 'TOGGLE_QUESTION', questionIndex: i, tagIndex: j })} />
                 <span className="slider-round"></span>
               </label>
             </li>  

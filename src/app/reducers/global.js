@@ -18,7 +18,17 @@ export default (state=initialState, action={}) => {
       return {
         ...state,
         data: {...state.data, ...action.data}
-      }  
+      } 
+    case 'TOGGLE_QUESTION':
+      let detail = OBject.clone(state.detail)
+      if (detail.Questions[actions.questionIndex].Input[action.tagIndex].enabled == true)
+        detail.Questions[actions.questionIndex].Input[action.tagIndex].enabled = false
+      else
+        detail.Questions[actions.questionIndex].Input[action.tagIndex].enabled = true  
+      return {
+        ...state,
+        detail: detail
+        } 
     default: return state;
   }
 }
