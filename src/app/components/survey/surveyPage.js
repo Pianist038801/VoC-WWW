@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router'
 
 class SurveyPage extends Component {
 
@@ -11,34 +12,47 @@ class SurveyPage extends Component {
   componentDidMount() {
   }
 
+  gotoDetail = (surveyID) => { 
+    browserHistory.push('current-survey')
+    this.props.dispatch({type: 'SET_DATA', data: {surveyID: surveyID} })
+  }
+
   render() {
-    let surveys = []
-    console.log('GGG',this.props.global)
+    let surveys = [] 
     for (let i = 0; i < this.props.global.surveys.length; i+=2)      
     {
       let rowItems = []
+
       for (let j = 0; j < 2 && i + j < this.props.global.surveys.length; j++) {
         let survey = this.props.global.surveys[i + j]
         let campaigns = survey.Campaigns.map((campaign, index) => <li key={index}>{campaign}</li>)
 
-        rowItems.push(
-          <div className="col-md-6" key={j}>
+        rowItems.push( 
+          <div className="col-md-6" key={j} onClick={()=>this.gotoDetail(survey.surveyID)} >
             <div className="cont">
               <p className="fw-500 mb-1">{survey.Name}</p>
-              <p className="mb-0 lh-4">{survey.Author} - {survey.Created}</p> 
+              <p className="mb-0 lh-4">{survey.Author} - {survey.Created}</p>
               <p className="mb-4">{survey.Description}</p>
               <p className="fw-500 mb-1">CAMPAIGNS</p>
               <ul className="list-unstyled mb-0">
                 {campaigns}
               </ul>
             </div>
-          </div>
+          </div> 
         )
       }
+
       surveys.push(
         <div className="row" key={i}>
           {rowItems}
         </div>
+      )
+    }  
+    if (surveys.length == 0)
+    {
+      surveys.push(
+        <p>You have not create any surveys.  Click on “New Survey” to get started”
+        </p>
       )
     }  
     return (
