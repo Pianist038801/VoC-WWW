@@ -1,0 +1,25 @@
+.surveys {
+	padding: 56px;
+	max-width: 1132px;
+
+	.btn-create-survey {
+		padding: 6px 20px 6px 16px;
+	}
+
+	a {
+   color: $default-color;
+
+   &:hover {
+   	text-decoration: none;
+   }
+	}
+
+	.cont {
+		padding: 25px 23px 25px;
+		max-width: 492px;
+
+		.list-unstyled {
+			line-height: 1.4;
+		}
+	}
+}

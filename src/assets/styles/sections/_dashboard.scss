@@ -1,0 +1,40 @@
+.dashboard {
+  .btn-new-campaign {
+    border-radius: 8px;
+    padding: 6px 30px;
+
+    i {
+      margin-right: 6px;
+    }
+    color: #fff;
+  }
+
+  h4 {
+    margin-bottom: 16px;
+  }
+
+  a {
+    color: $default-color;
+    text-decoration: none;
+  }
+
+  .cont {
+    padding: 23px 30px;
+    max-width: 512px;
+
+    .bg-lightblue {
+      color: #fff;
+      padding: 3px 17px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .created {
+      margin-bottom: 2px;
+    }
+
+    p span {
+      font-weight: 500;
+    }
+  }
+}

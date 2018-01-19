@@ -1,0 +1,57 @@
+/* ----- Fonts ----- */
+
+/* ----- Colors ----- */
+$default-color: #a9a9a9;
+$lightgray01-color: #f1f1f1;
+$lightgray02-color: #c7c7c7;
+$lightgray03-color: #e9e9e9;
+$lightgray04-color: #b6b6b6;
+$lightgray05-color: #bfbfbf;
+$lightgray06-color: #f6f6f6;
+$lightblue01-color: #26a9d9;
+$lightblue02-color: #4dcfff;
+$lightblue03-color: #2babc9;
+$lightblue04-color: #30bcd9;
+$lightgreen01-color: #43d67e;
+$lightgreen02-color: #56e82e;
+$lightorange01-color: #f09512;
+
+
+/* ----- Bootstrap breakpoints ----- */
+$bootstrap-lg-breakpoint: 1199px;
+$bootstrap-md-breakpoint: 991px;
+$bootstrap-sm-breakpoint: 767px;
+$bootstrap-xs-breakpoint: 575px;
+
+/* ----- Large devices (desktops, less than 1200px) ----- */
+@mixin bootstrap-lg-breakpoint () {
+  @media screen and (max-width: #{$bootstrap-lg-breakpoint}) {
+    @content;
+  }
+}
+
+/* ----- Medium devices (tablets, less than 992px) ----- */
+@mixin bootstrap-md-breakpoint () {
+  @media screen and (max-width: #{$bootstrap-md-breakpoint}) {
+    @content;
+  }
+}
+
+/* ----- Small devices (landscape phones, less than 768px) ----- */
+@mixin bootstrap-sm-breakpoint () {
+  @media screen and (max-width: #{$bootstrap-sm-breakpoint}) {
+    @content;
+  }
+}
+
+/* ----- Extra small devices (portrait phones, less than 576px) ----- */
+@mixin bootstrap-xs-breakpoint () {
+  @media screen and (max-width: #{$bootstrap-xs-breakpoint}) {
+    @content;
+  }
+}
+
+@include bootstrap-lg-breakpoint () {}
+@include bootstrap-md-breakpoint () {}
+@include bootstrap-sm-breakpoint () {}
+@include bootstrap-xs-breakpoint () {}

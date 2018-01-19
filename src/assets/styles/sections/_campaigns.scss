@@ -1,0 +1,144 @@
+.campaigns {
+	padding: 57px;
+
+	h4 {
+		margin-bottom: 15px;
+	}
+
+	.cont {
+		max-width: 490px;		
+	}
+
+	.new-campaign {
+		padding: 24px 22px;
+
+		.campaign-name {
+			margin-bottom: 30px;
+		}
+	}
+
+	.audience {
+		padding: 32px 20px 39px;
+
+		.btn {
+			margin-top: 20px;
+			border-radius: 8px;
+			padding: 2px 18px 2px 12px;
+
+			i {
+				margin-right: 6px;
+				font-size: 1.2em;
+			}
+		}
+	}
+
+	.survey {
+		padding: 32px 20px 40px;
+	}
+
+	.schedule {
+		padding: 40px 40px 50px;
+
+		.start-date, .end-date {
+			max-width: 102px;
+			font-size: 1.154em;
+		}
+	}
+
+	.configuration {
+		padding: 40px 30px 25px 40px;
+
+		.form-lightblue {
+			width: 34px;
+			padding: 4px 8px;
+		}
+
+	  .w-50px.every-call {
+
+	    &:after {
+	      right: 10px;
+	    }
+	  }
+	}
+
+	.alerts {
+		padding: 45px 40px 40px;
+	}
+
+	.btn-create-campaign {
+		border-radius: 8px;
+		padding: 6px 17px;
+
+		i {
+			margin-right: 6px;
+		}
+	}
+}
+
+.schedule-elements {
+	.day {
+		background-color: $default-color;
+		color: #fff;
+		border-radius: 4px;
+		padding: 1.5px 0;
+		text-align: center;
+		min-width: 25px;
+		height: 25px;
+		font-weight: 500;
+		font-size: 1.154em;
+		margin-top: -3px;
+		margin-bottom: 2px;
+		cursor: pointer;
+
+		&.active {
+			background-color: $lightblue01-color;
+		}
+	}
+
+	.time-slot {
+		white-space: nowrap;
+	}
+
+	.exclude-dates {
+		margin-top: 40px;
+	}
+
+	.thanksgiving {
+		max-width: 168px;
+		padding: 4px 10px;
+	}
+
+	.thanksgiving-date {
+		max-width: 111px;
+	}
+}
+
+.alerts-elements {
+
+	textarea {
+		background-color: $lightgray01-color;
+		border: none;
+		border-radius: 8px;
+		padding: 15px;
+		margin-left: 30px;
+		max-width: 275px;
+		font-size: 0.923em;
+		line-height: 1.4;
+		margin-bottom: 12px;
+
+		&:focus {
+			background-color: $lightgray01-color; 
+		}
+	}
+
+	.form-lightblue {
+		padding: 4px 10px;
+		width: 100%;
+		max-width: 170px;
+	}
+
+	.low-score-alert {
+		margin: 35px 0;
+	}
+}
+

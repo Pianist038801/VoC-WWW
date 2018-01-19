@@ -1,0 +1,73 @@
+.sidebar {
+	background: url(../images/navigation-bg.jpg) center top no-repeat;
+	background-size: cover;
+	position: fixed;
+	z-index: 999;
+	width: 300px;
+	height: 100%;
+	color: #fff;
+	top: 0;
+	left: 0;
+	overflow: auto; 
+
+	&.active {
+		left: 0;
+	}
+
+	.logo {
+	  width: 139px;
+	  height: 38px;
+	  background: url(../images/logo.png) center top no-repeat;
+	  margin: 47px 0 150px 65px;	
+		
+		span {
+			display: none;
+		}	  
+	}
+
+	ul {
+		margin-bottom: 100px;
+
+		li {
+
+			&:first-child a {
+				padding-left: 70px;
+			}
+
+			a {
+				display: block;
+				color: #fff;
+				padding: 6px 0;
+				font-weight: 500;
+				padding-left: 90px;
+
+				&.active {
+					color: #fff!important;
+					background-color: #2082a3!important;	
+
+					&:after {
+						font-family: "Fontawesome";
+						content: "\f054";
+						font-size: 1.5em;
+						margin: -4px 8px 0 0;
+						float: right;	
+					}
+				}
+
+				&:hover {
+					text-decoration: none;
+					color: #2082a3;
+				}
+			}
+		}
+	}
+}
+
+@include bootstrap-md-breakpoint () {
+	.sidebar {
+		left: -300px;
+		transition: left 0.5s;
+	}
+}
+
+

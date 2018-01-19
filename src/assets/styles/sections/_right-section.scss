@@ -1,0 +1,60 @@
+.right-section {
+	margin-left: 300px;
+
+	&.active {
+		transition: opacity 0.5s;
+		opacity: 0.5;
+	}
+
+	.navicon {
+		position: absolute;
+		top: 20px;
+		left: 25px;
+		z-index: 99;
+		cursor: pointer;
+		display: none;
+
+		i {
+			color: $default-color;
+			font-size: 2.5em;
+		}
+
+		&.active {
+			top: 0;
+			right: 0;
+			bottom: 0;
+			color: rgba(#fff, 0);
+			transition-delay: 0.5s;
+		}
+
+		&:hover {
+			opacity: 0.9;
+		}
+	}
+}
+
+
+@include bootstrap-md-breakpoint () {
+	.right-section {
+		margin-left: 25px;
+
+		.navicon {
+			display: block;
+		}
+
+		.wrapper {
+			padding: 70px 50px!important;
+		}
+	}
+}
+
+
+@include bootstrap-sm-breakpoint () {
+	.right-section {
+		margin: 0;
+
+		.wrapper {
+			padding: 70px 25px!important;
+		}
+	}
+}

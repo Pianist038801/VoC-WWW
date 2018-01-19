@@ -1,0 +1,136 @@
+.current-campaign {
+	max-width: 1190px;
+	padding: 85px 55px;
+
+	.cont {
+		&.campaign01 {
+			padding: 55px 30px 75px 35px;
+			max-width: 400px;
+
+			p {
+				line-height: 1.4;
+			}
+
+			.mb-3 {
+				margin-bottom: 1.1rem!important;
+			}
+
+			table {
+				tr {
+					th {
+						font-weight: normal;
+					}
+
+					th, td {
+						line-height: 1.4;
+						vertical-align: top;
+						min-width: 110px;
+						max-width: 170px;
+					}
+				}
+			}
+		}
+
+		&.configuration {
+			max-width: 625px;
+			position: relative;
+
+			.leftbar {
+				position: absolute;
+				top: 0;
+				left: 0;
+				height: 100%;
+				width: 150px;
+				background-color: $lightgray06-color;
+
+
+				ul {
+					margin-top: 32px;
+
+					li {
+						a{
+							display: block;
+							font-weight: 500;
+							color: $lightblue03-color;
+							padding: 6px 7px 6px 25px;
+
+							&:hover {
+								text-decoration: none;
+								opacity: 0.8;
+							}
+
+							&.active {
+								background-color: $lightblue04-color;
+								color: #fff;
+
+								&:after {
+									font-family: "Fontawesome";
+									content: "\f054";
+									font-size: 1.25em;
+									margin: -3px 0 0 0;
+									float: right;	
+								}
+							}
+						}
+					}
+				}
+			}
+
+			.right-section {
+				margin-left: 150px;
+			  padding: 32px 40px 25px;
+
+			  .input-date {
+			  	max-width: 126px;
+			  	padding: 4px 8px;
+			  }
+
+			  .schedule-elements {
+			  	margin-top: 30px;
+			  }
+
+			  .campaign-alerts {
+			  	margin-bottom: 63px;
+
+			  	.cont-lightgray {
+			  		background-color: $lightgray01-color;
+			  		padding: 7px 15px 2px;
+			  		border-radius: 8px;
+
+				  	.bg-lightblue {
+							color: #fff;
+							border-radius: 8px;
+							width: auto;
+							display: inline-block;
+							padding: 2.5px 15px;
+							font-weight: 500;
+							margin: 0 5px 5px 0;
+				  	}
+			  	}
+			  }
+
+				.alerts-elements {
+					margin-bottom: 76px;
+				}
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 1280px) {
+	.current-campaign {
+		.cont {
+
+			&.configuration {
+				.right-section {
+					.alerts-elements {
+
+						textarea {
+							margin-left: 0;
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,66 @@
+[
+  {
+    "Name": "Campaign 1",
+    "CampaignID": "000001",
+    "Author": {
+      "name": "John Willaims",
+      "email": "John.Willaims@spinsci.com"
+    },
+    "Created": "2017/04/01",
+    "StartDate": "2017/05",
+    "EndDate": "2017/10",
+    "Description": "This is meta-data stuff",
+    "Survey": {
+      "Name": "Survey 001"
+    },
+    "History": {}
+  },
+  {
+    "Name": "Campaign 2",
+    "CampaignID": "000002",
+    "Author": {
+      "name": "John Willaims",
+      "email": "John.Willaims@spinsci.com"
+    },
+    "Created": "2017/03/01",
+    "StartDate": "2017/05",
+    "EndDate": "2017/10",
+    "Description": "This is meta-data stuff",
+    "Survey": {
+      "Name": "Survey 002"
+    },
+    "History": {}
+  },
+  {
+    "Name": "Campaign 3",
+    "CampaignID": "000003",
+    "Author": {
+      "name": "John Willaims",
+      "email": "John.Willaims@spinsci.com"
+    },
+    "Created": "2017/04/01",
+    "StartDate": "2017/05",
+    "EndDate": "2017/10",
+    "Description": "This is meta-data stuff",
+    "Survey": {
+      "Name": "Survey 003"
+    },
+    "History": {}
+  },
+  {
+    "Name": "Campaign 4",
+    "CampaignID": "000004",
+    "Author": {
+      "name": "John Willaims",
+      "email": "John.Willaims@spinsci.com"
+    },
+    "Created": "2017/04/01",
+    "StartDate": "2017/05",
+    "EndDate": "2017/10",
+    "Description": "This is meta-data stuff",
+    "Survey": {
+      "Name": "Survey 004"
+    },
+    "History": {}
+  }
+]

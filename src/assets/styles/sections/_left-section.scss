@@ -1,0 +1,93 @@
+.left-section {
+	margin-left: 300px;
+
+	&.active {
+		transition: opacity 0.3s;
+		opacity: 0.5;
+	}
+
+	.navicon {
+		position: absolute;
+		top: 20px;
+		left: 20px;
+		z-index: 3;
+		color: gray;
+		cursor: pointer;
+		display: none;
+		transition-delay: 0.3s;
+	}
+
+	.navicon.active {
+		bottom: 0;
+		right: 0;
+		color: rgba(#fff, 0);
+		transition-delay: 0s;
+	}
+
+	.navicon i {
+		font-size: 32px;
+	}
+
+	.navicon:hover {
+		opacity: 0.9;
+	}
+
+	.wrapper {
+		width: 100%;
+
+		&.dashboard {
+			padding: 30px 55px;
+			max-width: 1200px;
+		}
+
+		&.survey {
+			padding: 50px;
+			max-width: 850px;
+		}
+
+		&.create-survey {
+			padding: 56px;
+			max-width: 1132px;
+		}
+
+		&.blacklist {
+			padding: 60px 56px;
+			max-width: 862px;
+		}
+	}
+}
+
+@include bootstrap-lg-breakpoint () {
+	.left-section {
+
+		.wrapper.dashboard {
+			padding: 30px;
+		}
+	}
+}
+
+
+@include bootstrap-md-breakpoint () {
+	.left-section {
+		margin-left: 25px;
+
+		.navicon {
+			display: block;
+		}
+
+		.wrapper {
+			padding: 70px 50px!important;
+		}
+	}
+}
+
+
+@include bootstrap-sm-breakpoint () {
+	.left-section {
+		margin: 0;
+
+		.wrapper {
+			padding: 70px 25px!important;
+		}
+	}
+}
