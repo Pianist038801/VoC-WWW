@@ -12,6 +12,35 @@ class SurveyPage extends Component {
   }
 
   render() {
+    let surveys = []
+    console.log('GGG',this.props.global)
+    for (let i = 0; i < this.props.global.surveys.length; i+=2)      
+    {
+      let rowItems = []
+      for (let j = 0; j < 2 && i + j < this.props.global.surveys.length; j++) {
+        let survey = this.props.global.surveys[i + j]
+        let campaigns = survey.Campaigns.map((campaign, index) => <li key={index}>{campaign}</li>)
+
+        rowItems.push(
+          <div className="col-md-6" key={j}>
+            <div className="cont">
+              <p className="fw-500 mb-1">{survey.Name}</p>
+              <p className="mb-0 lh-4">{survey.Author} - {survey.Created}</p> 
+              <p className="mb-4">{survey.Description}</p>
+              <p className="fw-500 mb-1">CAMPAIGNS</p>
+              <ul className="list-unstyled mb-0">
+                {campaigns}
+              </ul>
+            </div>
+          </div>
+        )
+      }
+      surveys.push(
+        <div className="row" key={i}>
+          {rowItems}
+        </div>
+      )
+    }  
     return (
       <section className="left-section">
         <div className="navicon">
@@ -36,73 +65,26 @@ class SurveyPage extends Component {
             </div>
           </div>
 
-          <div className="row">
-            <div className="col-md-6">
-              <div className="cont">
-                <p className="fw-500 mb-1">NEW CUSTOMERS</p>
-                <p className="mb-0 lh-4">John Smith - 10/13/17</p>
-                <p>8 Questions</p>
-                <p className="mb-4">In sed purus rhoncus, porta ex sit amet, interdum nisl. Phasellus vel suscipit  orci. Quisque in molestie metus. Interdum et malesuada fames ac ante ipsum  primis in faucibus. Ut finibus bibendum est, id porta tellus.</p>
-                <p className="fw-500 mb-1">CAMPAIGNS</p>
-                <ul className="list-unstyled mb-0">
-                  <li>2017 New Pharmacy Customers</li>
-                  <li>West Coast Customers</li>
-                  <li>Online Order Survey</li>
-                </ul>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="cont">
-                <p className="fw-500 mb-1">NEW CUSTOMERS</p>
-                <p className="mb-0 lh-4">John Smith - 10/13/17</p>
-                <p>8 Questions</p>
-                <p className="mb-4">In sed purus rhoncus, porta ex sit amet, interdum nisl. Phasellus vel suscipit  orci. Quisque in molestie metus. Interdum et malesuada fames ac ante ipsum  primis in faucibus. Ut finibus bibendum est, id porta tellus.</p>
-                <p className="fw-500 mb-1">CAMPAIGNS</p>
-                <ul className="list-unstyled mb-0">
-                  <li>2017 New Pharmacy Customers</li>
-                  <li>West Coast Customers</li>
-                  <li>Online Order Survey</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-6">
-              <div className="cont">
-                <p className="fw-500 mb-1">NEW CUSTOMERS</p>
-                <p className="mb-0 lh-4">John Smith - 10/13/17</p>
-                <p>8 Questions</p>
-                <p className="mb-4">In sed purus rhoncus, porta ex sit amet, interdum nisl. Phasellus vel suscipit  orci. Quisque in molestie metus. Interdum et malesuada fames ac ante ipsum  primis in faucibus. Ut finibus bibendum est, id porta tellus.</p>
-                <p className="fw-500 mb-1">CAMPAIGNS</p>
-                <ul className="list-unstyled mb-0">
-                  <li>2017 New Pharmacy Customers</li>
-                  <li>West Coast Customers</li>
-                  <li>Online Order Survey</li>
-                </ul>
-              </div>
-            </div>
-            <div className="col-md-6">
-              <div className="cont">
-                <p className="fw-500 mb-1">NEW CUSTOMERS</p>
-                <p className="mb-0 lh-4">John Smith - 10/13/17</p>
-                <p>8 Questions</p>
-                <p className="mb-4">In sed purus rhoncus, porta ex sit amet, interdum nisl. Phasellus vel suscipit  orci. Quisque in molestie metus. Interdum et malesuada fames ac ante ipsum  primis in faucibus. Ut finibus bibendum est, id porta tellus.</p>
-                <p className="fw-500 mb-1">CAMPAIGNS</p>
-                <ul className="list-unstyled mb-0">
-                  <li>2017 New Pharmacy Customers</li>
-                  <li>West Coast Customers</li>
-                  <li>Online Order Survey</li>
-                </ul>
-              </div>
-            </div>
-          </div>
+          {surveys}
+ 
         </div>
       </section>
     );
   }
 }
 
-export default connect(null, {})(
+function mapStateToProps(state) {
+  console.log('State',state)
+  const global = state.global
+  console.log('global', global)
+  return { global: global };
+}
+
+function mapDispatchToProps(dispatch) { 
+  
+  return { dispatch };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(
   SurveyPage
 );

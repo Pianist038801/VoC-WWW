@@ -321,7 +321,10 @@ class CurrentSurveyPage extends Component {
     );
   }
 }
-
-export default connect(null, {})(
+function mapStateToProps(state) {
+  const global = state.get('global');
+  return { global };
+}
+export default connect(mapStateToProps, {})(
   CurrentSurveyPage
 );
