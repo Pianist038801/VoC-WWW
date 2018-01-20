@@ -18,8 +18,7 @@ class CurrentSurveyPage extends Component {
 	  var reader = new FileReader();
     reader.onload = function(e) {
       sound.src = this.result;
-      sound.controls = true;
-      //sound.play();
+      sound.controls = true; 
       };
     reader.readAsDataURL(f);
   }
@@ -47,6 +46,10 @@ class CurrentSurveyPage extends Component {
     for (let i = 0; i < item.Questions.length; i++) {
       const question = item.Questions[i]
       let questionTag = []
+      let options = []
+      for (let optNum = 0; optNum < question.Input.length; optNum++) {
+        options.push(<option>{question.Input[optNum].Next}</option>)
+      }
       for (let j = 0; j < question.Input.length; j++) {
         const tag = question.Input[j]
         if (tag.enabled != false)
@@ -54,13 +57,15 @@ class CurrentSurveyPage extends Component {
             <li key={j}>
               <span className="text-lightblue">{tag.Value}</span>
               <label className="switch">
-                <input type="checkbox" checked onChange={() => this.props.dispatch({ type: 'TOGGLE_QUESTION', questionIndex: i, tagIndex: j })} />
+                <input type="checkbox" checked={true} onChange={() => this.props.dispatch({ type: 'TOGGLE_QUESTION', questionIndex: i, tagIndex: j })} />
                 <span className="slider-round"></span>
               </label>
               <span className="text-lightblue">Go to</span>
-              <button style={{ marginLeft: '5px' }} className="btn bg-lightblue btn-question" type="button">
-                <span>{tag.Next}</span>
-              </button>
+               
+              <select value={tag.Next} style={{marginLeft: '5px',borderColor: 'transparent', color: 'white', backgroundColor: 'rgb(34,152,209)' }}class="form-control" id="sel1"> 
+                {options}
+              </select>
+                 
             </li>
           )
         else {
@@ -68,7 +73,7 @@ class CurrentSurveyPage extends Component {
             <li key={j}>
               <span className="text-lightblue">{tag.Value}</span>
               <label className="switch">
-                <input type="checkbox" onChange={() => this.props.dispatch({ type: 'TOGGLE_QUESTION', questionIndex: i, tagIndex: j })} />
+                <input type="checkbox" checked={false} onChange={() => this.props.dispatch({ type: 'TOGGLE_QUESTION', questionIndex: i, tagIndex: j })} />
                 <span className="slider-round"></span>
               </label>
             </li>
