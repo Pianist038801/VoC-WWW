@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import { connect } from 'react-redux'; 
 
 class CurrentSurveyPage extends Component {
 
@@ -11,35 +11,47 @@ class CurrentSurveyPage extends Component {
   componentDidMount() {
   }
 
+  loadFile = (files, id) => {
+		const f = files[0];
+    var name = f.name; 
+    var sound = document.getElementById(id);
+	  var reader = new FileReader();
+    reader.onload = function(e) {
+      sound.src = this.result;
+      sound.controls = true;
+      //sound.play();
+      };
+    reader.readAsDataURL(f);
+  }
+  
   render() {
+    const _this = this
     const item = this.props.global.detail
     let languageItems = [], questions = []
 
     for (let i = 0; i < item.Languages.length; i++) {
-      if(i==0)
+      if (i == 0)
         languageItems.push(
           <button className="btn bg-lightblue btn-settings active" type="button" key={i}>
             <i className="fa fa-cog"></i><span>{item.Languages[0]}</span>
           </button>
         )
       else
-      languageItems.push(
-        <button className="btn bg-lightblue btn-settings" type="button"  key={i}>
-          <i className="fa fa-cog"></i><span>{item.Languages[i]}</span>
-        </button>
-      )     
+        languageItems.push(
+          <button className="btn bg-lightblue btn-settings" type="button" key={i}>
+            <i className="fa fa-cog"></i><span>{item.Languages[i]}</span>
+          </button>
+        )
     }
 
-    for (let i = 0; i < item.Questions.length; i++)
-    {
+    for (let i = 0; i < item.Questions.length; i++) {
       const question = item.Questions[i]
       let questionTag = []
-      for (let j = 0; j < question.Input.length; j++)
-      {
+      for (let j = 0; j < question.Input.length; j++) {
         const tag = question.Input[j]
         if (tag.enabled != false)
           questionTag.push(
-            <li>
+            <li key={j}>
               <span className="text-lightblue">{tag.Value}</span>
               <label className="switch">
                 <input type="checkbox" checked onChange={() => this.props.dispatch({ type: 'TOGGLE_QUESTION', questionIndex: i, tagIndex: j })} />
@@ -53,46 +65,64 @@ class CurrentSurveyPage extends Component {
           )
         else {
           questionTag.push(
-            <li>
+            <li key={j}>
               <span className="text-lightblue">{tag.Value}</span>
               <label className="switch">
                 <input type="checkbox" onChange={() => this.props.dispatch({ type: 'TOGGLE_QUESTION', questionIndex: i, tagIndex: j })} />
                 <span className="slider-round"></span>
               </label>
-            </li>  
+            </li>
           )
         }
-      }  
-      questions.push(
-        <div className="questions">
-          <h4>{question.QuestionID}</h4>
-            <div className="cont active">
-              <div className="close-circle">
-                <i className="fa fa-close"></i>
-              </div>
 
-              <div className="row">
-                <div className="col-sm-6 col-md-7 pr-sm-0">
-                  <p className="bg-lightgray top-p text-lightblue mb-3">{question.Description}</p>
-                  <h6 className="mb-1">AUDIO - DEFAULT</h6>
-                  <p className="audio-name mb-1">{question.Media.Path}</p>
-                  <audio controls>
-                    <source src={question.Media.Path} type="audio/ogg" />
-                    Your browser does not support the audio element.
-                  </audio>
-                  <h6 className="mt-4">TTS</h6>
-                  <p className="bg-lightgray p-tts">{question.TextToSpeech.TTS}</p> 
-               </div>
-                <div className="col-sm-6 col-md-5">
-                  <ul className="list-unstyled">
-                     {questionTag}
-                  </ul>
+      }
+      questions.push(
+        <div className="questions" key={i}>
+          <h4>{question.QuestionID}</h4>
+          <div className="cont">
+            <div className="close-circle">
+              <i className="fa fa-close"></i>
+            </div>
+
+            <div className="row">
+              <div className="col-sm-6 col-md-7 pr-sm-0">
+                <p className="bg-lightgray top-p text-lightblue mb-3">{question.Description}</p>
+                <h6 className="mb-1">AUDIO - DEFAULT</h6>
+                <p className="audio-name mb-1">{question.Media.Path}</p>
+                <div className="row">
+                <div className="col-sm-9">
+                    <audio id={i} controls>
+                      <source src="offer_x.wav" type="audio/wav" />
+                      Your browser does not support the audio element.
+                    </audio>
+                </div>    
+                <div className="col-sm-1"> 
+                    <i className="fa fa-volume-up" style={{ fontSize: 20, color: 'black' }}></i> 
                 </div>
+                <div className="col-sm-1" onClick={() => document.getElementById("datafile"+i).click()}> 
+                    <input
+                      type="file"
+                      id={"datafile"+i}
+                      name="datafile"
+                      className="datafile"
+                      onChange={(e) => this.loadFile(e.target.files, i)}
+                    />
+                  <i className="fa fa-cog"  style={{ fontSize: 20, color: 'black' }}></i>
+                </div>
+              </div>  
+                <h6 className="mt-4">TTS</h6>
+                <p className="bg-lightgray p-tts">{question.TextToSpeech.TTS}</p>
+              </div>
+              <div className="col-sm-6 col-md-5">
+                <ul className="list-unstyled">
+                  {questionTag}
+                </ul>
               </div>
             </div>
           </div>
+        </div>
       )
-    }  
+    }
 
     return (
       <section className="left-section">
@@ -128,16 +158,29 @@ class CurrentSurveyPage extends Component {
                 <div className="cont">
                   <h6 className="mb-1">AUDIO - DEFAULT</h6>
                   <p className="audio-name mb-1">{item.Intro.Media.Path}</p>
-                  <audio controls>
-                    <source src="assassin.wav" type="audio/wav" />
-                    Your browser does not support the audio element.
-                  </audio>
+                  <div className="row">
+                    <div className="col-sm-9">
+                        <audio id="intro" controls>
+                          <source src="offer_x.wav" type="audio/wav" />
+                          Your browser does not support the audio element.
+                        </audio>
+                    </div>    
+                    <div className="col-sm-1"> 
+                        <i className="fa fa-volume-up" style={{ fontSize: 20, color: 'black' }}></i> 
+                    </div>
+                    <div className="col-sm-1" onClick={() => document.getElementById("datafile_intro").click()}> 
+                        <input
+													type="file"
+													id="datafile_intro"
+													name="datafile"
+													className="datafile"
+													onChange={(e) => this.loadFile(e.target.files,'intro')}
+												/>
+                      <i className="fa fa-cog"  style={{ fontSize: 20, color: 'black' }}></i>
+                    </div>
+                  </div>  
                   <h6 className="mt-4">TTS</h6>
-                  <p className="bg-lightgray p-tts">{item.Intro.TextToSpeech.TTS}</p>
-                  <audio controls>
-                    <source src="./offer_x.wav" type="audio/ogg" />
-                    Your browser does not support the audio element.
-                  </audio>
+                  <p className="bg-lightgray p-tts">{item.Intro.TextToSpeech.TTS}</p> 
                 </div>
               </div>
             </div>
@@ -147,27 +190,39 @@ class CurrentSurveyPage extends Component {
                 <div className="cont">
                   <h6 className="mb-1">AUDIO - DEFAULT</h6>
                   <p className="audio-name mb-1">{item.Closing.Media.Path}</p>
-                  <audio controls>
-                    <source src="offer_x.wav" type="audio/wav" />
-                    Your browser does not support the audio element.
-                  </audio>
+                  <div className="row">
+                    <div className="col-sm-9">
+                        <audio id="outro" controls>
+                          <source src="offer_x.wav" type="audio/wav" />
+                          Your browser does not support the audio element.
+                        </audio>
+                    </div>    
+                    <div className="col-sm-1"> 
+                        <i className="fa fa-volume-up" style={{ fontSize: 20, color: 'black' }}></i> 
+                    </div>
+                    <div className="col-sm-1" onClick={() => document.getElementById("datafile_outro").click()}> 
+                        <input
+													type="file"
+													id="datafile_outro"
+													name="datafile"
+													className="datafile"
+													onChange={(e) => this.loadFile(e.target.files,'outro')}
+												/>
+                      <i className="fa fa-cog"  style={{ fontSize: 20, color: 'black' }}></i>
+                    </div>
+                  </div>  
                   <h6 className="mt-4">TTS</h6>
-                  <p className="bg-lightgray p-tts">{item.Closing.TextToSpeech.TTS}</p>
-                  <audio controls>
-                    <source src="..." type="audio/ogg" />
-                    Your browser does not support the audio element.
-                  </audio>
+                  <p className="bg-lightgray p-tts">{item.Closing.TextToSpeech.TTS}</p> 
                 </div>
               </div>
             </div>
           </div>
 
           {questions}
-
           <div className="btn-add-question pt-2">
-            <button className="btn bg-lightblue btn-add-question mr-3" type="button">
+            <button className="btn bg-lightblue btn-add-question mr-3" type="button"> 
               <span>ADD QUESTION</span>
-            </button> 
+            </button>
           </div>
         </div>
       </section>
@@ -178,6 +233,9 @@ function mapStateToProps(state) {
   const global = state.global
   return { global };
 }
-export default connect(mapStateToProps, {})(
+function mapDispatchToProps(dispatch) {
+  return { dispatch };
+}
+export default connect(mapStateToProps, mapDispatchToProps)(
   CurrentSurveyPage
 );
