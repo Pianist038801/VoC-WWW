@@ -20,11 +20,13 @@ export default (state=initialState, action={}) => {
         data: {...state.data, ...action.data}
       } 
     case 'TOGGLE_QUESTION':
-      let detail =  state.detail
+      let detail = state.detail
+      
       if (detail.Questions[action.questionIndex].Input[action.tagIndex].enabled == true)
         detail.Questions[action.questionIndex].Input[action.tagIndex].enabled = false
       else
         detail.Questions[action.questionIndex].Input[action.tagIndex].enabled = true  
+      
       return {
         ...state,
         detail: detail

@@ -5,10 +5,32 @@ class CurrentSurveyPage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {detail: null}
   }
 
+
   componentDidMount() {
+    //this.loadDataFromServer();
+  }
+
+  loadDataFromServer = () => {  
+      return fetch('http://eb783aa0.ngrok.io/survey/id/db0e6723-8c1d-4c24-8434-7aadfcad9bc8', {
+        method: 'POST',
+        headers: {
+          Authorization: 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ 
+        })
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          console.log('Response', response);
+           this.setState({detail: response})
+        })
+        .catch((error) => {
+          console.error('api error: ', error);
+        }); 
   }
 
   loadFile = (files, id) => {
@@ -26,6 +48,8 @@ class CurrentSurveyPage extends Component {
   render() {
     const _this = this
     const item = this.props.global.detail
+    //const item = this.state.detail
+    if(item==null) return null
     let languageItems = [], questions = []
 
     for (let i = 0; i < item.Languages.length; i++) {
