@@ -53,7 +53,7 @@
     "style-loader": "^0.19.1"
   },
   "scripts": {
-    "start": "webpack-dev-server --bail --progress --profile --open --host 0.0.0.0",
+    "start": "webpack-dev-server --bail --progress --profile --open",
     "build": "npm run clean && webpack --config config/webpack.prod.js --progress --profile --bail",
     "clean": "rimraf dist",
     "test": "NODE_PATH=./src react-scripts test --env=jsdom"

@@ -10,18 +10,16 @@ class CurrentSurveyPage extends Component {
 
 
   componentDidMount() {
-    //this.loadDataFromServer();
+    this.loadDataFromServer();
   }
 
-  loadDataFromServer = () => {  
-      return fetch('http://eb783aa0.ngrok.io/survey/id/db0e6723-8c1d-4c24-8434-7aadfcad9bc8', {
-        method: 'POST',
+  loadDataFromServer = () => {
+      return fetch('https://mirth-service.staging.agentacloud.com:8886/survey/92743946-9aa6-46b3-9fab-c8d91032f14d', {
+        method: 'GET',
         headers: {
-          Authorization: 'Basic dXNlcm5hbWU6cGFzc3dvcmQ=',
+          Authorization: 'Basic dm9jLW1ja2Vzc29uOlE2YUdLOGhUOHE3ZTlSZ0dxU2hRc2c5VQ==',
           'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ 
-        })
+        }, 
       })
         .then((response) => response.json())
         .then((response) => {
