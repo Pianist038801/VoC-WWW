@@ -2,22 +2,33 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router'
 
+import { ProgressView } from './progress-view'
+
 class SurveyPage extends Component {
 
   constructor(props) {
     super(props);
     this.state = {surveys: null}
+    console.log('PROPS=', props)
   }
 
-  componentDidMount() {
+  componentDidMount() { 
+    this.showProgressView();
     this.loadDataFromServer();
+  }
+  showProgressView = () => {
+    this.progressView && this.progressView.show()
+  }
+
+  hideProgressView = () => {
+      this.progressView && this.progressView.hide()
   }
 
   loadDataFromServer = () => {
-      return fetch('https://mirth-service.staging.agentacloud.com:8886/survey', {
+      return fetch('https://mirth-service.staging.agentacloud.com:8886/survey', { 
         method: 'GET',
         headers: {
-          Authorization: 'Basic dm9jLW1ja2Vzc29uOlE2YUdLOGhUOHE3ZTlSZ0dxU2hRc2c5VQ==',
+          Authorization: 'Basic dm9jLW1ja2Vzc29uOlE2YUdLOGhUOHE3ZTlSZ0dxU2hRc2c5VQ==',   
           'Content-Type': 'application/json'
         },
       })
@@ -32,12 +43,14 @@ class SurveyPage extends Component {
   }
   
   gotoDetail = (surveyID) => { 
-    browserHistory.push('current-survey')
+    browserHistory.push('current-survey',  {
+      bomID: 2
+    } )
     this.props.dispatch({type: 'SET_DATA', data: {surveyId: surveyID} })
   }
 
   render() {
-    if(this.state.surveys == null) return null
+    if(this.state.surveys == null) return <ProgressView ref={e => this.progressView = e} />
     let surveys = [] 
     for (let i = 0; i < this.state.surveys.length; i+=2)      
     {
@@ -77,6 +90,7 @@ class SurveyPage extends Component {
     }  
     return (
       <section className="left-section">
+        
         <div className="navicon">
           <i className="fa fa-bars"></i>
         </div>

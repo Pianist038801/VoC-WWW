@@ -1,24 +1,34 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'; 
+import { ProgressView } from './progress-view'
 
 class CurrentSurveyPage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {detail: null, editStatus: false}
+    console.log('PROPS=', props)
+    this.state = {detail: null, editStatus: false, id: props.global.data.surveyId}
   }
 
-
   componentDidMount() {
+    this.showProgressView();
     this.loadDataFromServer();
   }
 
+  showProgressView = () => {
+    this.progressView && this.progressView.show()
+  }
+
+  hideProgressView = () => {
+      this.progressView && this.progressView.hide()
+  }
+
   extractFileName = (string) => {
-    return string.substring(string.lastIndexOf('/') + 1) 
+    return string.substring(string.lastIndexOf('/') + 1)
   }
 
   loadDataFromServer = () => {
-      return fetch('https://mirth-service.staging.agentacloud.com:8886/survey', {
+      return fetch(`https://mirth-service.staging.agentacloud.com:8886/survey/id/${this.state.id}`, {
         method: 'GET',
         headers: {
           Authorization: 'Basic dm9jLW1ja2Vzc29uOlE2YUdLOGhUOHE3ZTlSZ0dxU2hRc2c5VQ==',
@@ -28,7 +38,7 @@ class CurrentSurveyPage extends Component {
         .then((response) => response.json())
         .then((response) => {
           console.log('Response', response);
-           this.setState({detail: response})
+           this.setState({detail: response[0]})
         })
         .catch((error) => {
           console.error('api error: ', error);
@@ -50,9 +60,9 @@ class CurrentSurveyPage extends Component {
   render() {
     //return null
 
-    const item = this.props.global.detail
+    const item = this.state.detail
     //const item = this.state.detail
-    if(item==null) return null
+    if(item==null) return <ProgressView ref={e => this.progressView = e} />
     let languageItems = [], questions = []
     var introItem, closingItem
     for (let i = 0; i < item.Language.length; i++) {
@@ -120,7 +130,7 @@ class CurrentSurveyPage extends Component {
       }
       questions.push(
         <div className="questions" key={i}>
-          <h4>{question.id}</h4>
+          <h4>Question{i-1}</h4>
           <div className="cont">
             <div className="close-circle">
               <i className="fa fa-close"></i>
@@ -147,10 +157,10 @@ class CurrentSurveyPage extends Component {
                       className="datafile"
                       onChange={(e) => this.loadFile(e.target.files, i)}
                     />
-                  <i className="fa fa-cog"  style={{ fontSize: 20, color: 'black' }}></i>
+                  <i className="fa fa-cog"  style={{ fontSize: 25,   marginTop: '8px', color: 'black' }}></i>
                 </div>
               </div>  
-                {question.TTS!=null && <h6 className="mt-4">TTS</h6>}
+                <h6 className="mt-4">TTS</h6>
                 {question.TTS !=null && <p className="bg-lightgray p-tts">{question.TTS[0].script}</p>}
               </div>
               <div className="col-sm-6 col-md-5">
@@ -191,7 +201,7 @@ class CurrentSurveyPage extends Component {
             <div className="clearfix"></div>
             <div className="cont">
               <a className="text-lightblue" href="#">VOICE</a>
-              <p><span className="mr-2">Edited</span><span className="mr-2">{item.Modified}</span><span className="mr-3">{item.Author.Name}</span><a className="show-history" href="#">Show History</a></p>
+              <p><span className="mr-2">Edited</span><span className="mr-2">{new Date(item.created).toISOString().slice(0, 10)}</span><span className="mr-3">{item.Author[0].name}</span><a className="show-history" href="#">Show History</a></p>
               <p className="bg-lightgray">{item.description}</p>
               {languageItems}
               <button className="btn bg-lightblue btn-settings" type="button">
@@ -222,10 +232,10 @@ class CurrentSurveyPage extends Component {
 													className="datafile"
 													onChange={(e) => this.loadFile(e.target.files,'intro')}
 												/>
-                      <i className="fa fa-cog"  style={{ fontSize: 20, color: 'black' }}></i>
+                      <i className="fa fa-cog"  style={{ fontSize: 25,   marginTop: '8px', color: 'black' }}></i>
                     </div>
                   </div>  
-                  {introItem.TTS!=null && <h6 className="mt-4">TTS</h6>}
+                  <h6 className="mt-4">TTS</h6>
                   {introItem.TTS!=null && <p className="bg-lightgray p-tts">{introItem.TTS[0].script}</p>}
                 </div>}
               </div>
@@ -251,10 +261,10 @@ class CurrentSurveyPage extends Component {
 													className="datafile"
 													onChange={(e) => this.loadFile(e.target.files,'outro')}
 												/>
-                      <i className="fa fa-cog"  style={{ fontSize: 20, color: 'black' }}></i>
+                      <i className="fa fa-cog"  style={{ fontSize: 25,   marginTop: '8px', color: 'black' }}></i>
                     </div>
                   </div>}
-                  {closingItem.TTS!=null && <h6 className="mt-4">TTS</h6>}
+                  <h6 className="mt-4">TTS</h6>
                   {closingItem.TTS!=null && <p className="bg-lightgray p-tts">{closingItem.TTS[0].script}</p>}
                 </div>
                 
