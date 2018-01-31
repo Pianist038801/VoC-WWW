@@ -10,11 +10,30 @@ class SurveyPage extends Component {
   }
 
   componentDidMount() {
+    this.loadDataFromServer();
   }
 
+  loadDataFromServer = () => {
+      return fetch('https://mirth-service.staging.agentacloud.com:8886/survey', {
+        method: 'GET',
+        headers: {
+          Authorization: 'Basic dm9jLW1ja2Vzc29uOlE2YUdLOGhUOHE3ZTlSZ0dxU2hRc2c5VQ==',
+          'Content-Type': 'application/json'
+        },
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          console.log('Response', response);
+           this.setState({detail: response})
+        })
+        .catch((error) => {
+          console.error('api error: ', error);
+        });
+  }
+  
   gotoDetail = (surveyID) => { 
     browserHistory.push('current-survey')
-    this.props.dispatch({type: 'SET_DATA', data: {surveyID: surveyID} })
+    this.props.dispatch({type: 'SET_DATA', data: {surveyId: surveyID} })
   }
 
   render() {
@@ -25,14 +44,14 @@ class SurveyPage extends Component {
 
       for (let j = 0; j < 2 && i + j < this.props.global.surveys.length; j++) {
         let survey = this.props.global.surveys[i + j]
-        let campaigns = survey.Campaigns.map((campaign, index) => <li key={index}>{campaign}</li>)
-
+        //let campaigns = survey.Campaigns.map((campaign, index) => <li key={index}>{campaign}</li>)
+        let campaigns = []
         rowItems.push( 
-          <div className="col-md-6" key={j} onClick={()=>this.gotoDetail(survey.surveyID)} >
+          <div className="col-md-6" key={j} onClick={()=>this.gotoDetail(survey.surveyId)} >
             <div className="cont">
-              <p className="fw-500 mb-1">{survey.Name}</p>
-              <p className="mb-0 lh-4">{survey.Author} - {survey.Created}</p>
-              <p className="mb-4">{survey.Description}</p>
+              <p className="fw-500 mb-1">{survey.name}</p>
+              <p className="mb-0 lh-4">{survey.Author[0].name} - {new Date(survey.created).toISOString().slice(0, 10)}</p>
+              <p className="mb-4">{survey.description}</p>
               <p className="fw-500 mb-1">CAMPAIGNS</p>
               <ul className="list-unstyled mb-0">
                 {campaigns}

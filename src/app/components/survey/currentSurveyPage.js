@@ -5,7 +5,7 @@ class CurrentSurveyPage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {detail: null}
+    this.state = {detail: null, editStatus: false}
   }
 
 
@@ -14,12 +14,12 @@ class CurrentSurveyPage extends Component {
   }
 
   loadDataFromServer = () => {
-      return fetch('https://mirth-service.staging.agentacloud.com:8886/survey/92743946-9aa6-46b3-9fab-c8d91032f14d', {
+      return fetch('https://mirth-service.staging.agentacloud.com:8886/survey', {
         method: 'GET',
         headers: {
           Authorization: 'Basic dm9jLW1ja2Vzc29uOlE2YUdLOGhUOHE3ZTlSZ0dxU2hRc2c5VQ==',
           'Content-Type': 'application/json'
-        }, 
+        },
       })
         .then((response) => response.json())
         .then((response) => {
@@ -28,7 +28,7 @@ class CurrentSurveyPage extends Component {
         })
         .catch((error) => {
           console.error('api error: ', error);
-        }); 
+        });
   }
 
   loadFile = (files, id) => {
@@ -44,23 +44,24 @@ class CurrentSurveyPage extends Component {
   }
   
   render() {
+    return null
     const _this = this
-    const item = this.props.global.detail
-    //const item = this.state.detail
+    //const item = this.props.global.detail
+    const item = this.state.detail
     if(item==null) return null
     let languageItems = [], questions = []
 
-    for (let i = 0; i < item.Languages.length; i++) {
+    for (let i = 0; i < item.Language.length; i++) {
       if (i == 0)
         languageItems.push(
           <button className="btn bg-lightblue btn-settings active" type="button" key={i}>
-            <i className="fa fa-cog"></i><span>{item.Languages[0]}</span>
+            <i className="fa fa-cog"></i><span>{item.Language[0]}</span>
           </button>
         )
       else
         languageItems.push(
           <button className="btn bg-lightblue btn-settings" type="button" key={i}>
-            <i className="fa fa-cog"></i><span>{item.Languages[i]}</span>
+            <i className="fa fa-cog"></i><span>{item.Language[i]}</span>
           </button>
         )
     }
@@ -69,6 +70,7 @@ class CurrentSurveyPage extends Component {
       const question = item.Questions[i]
       let questionTag = []
       let options = []
+      if(question.Input == null)
       for (let optNum = 0; optNum < question.Input.length; optNum++) {
         options.push(<option>{question.Input[optNum].Next}</option>)
       }
@@ -163,7 +165,15 @@ class CurrentSurveyPage extends Component {
                 <h4>{item.Name}</h4>
               </div>
               <div className="col-4">
-                <button className="btn btn-save float-right" type="button"><span>SAVE</span></button>
+              { 
+                !this.state.editStatus
+                ?
+                <button className="btn btn-save float-right" style={{backgroundColor: '#26a9d9'}}type="button" onClick={()=>this.setState({editStatus: true})}>
+                  <i className="fa fa-cog"></i><span>&nbsp; EDIT</span>
+                </button>
+                :
+                <button className="btn btn-save float-right" type="button" onClick={()=>this.setState({editStatus: false })}><span>SAVE</span></button>
+              }
               </div>
             </div>
             <div className="clearfix"></div>

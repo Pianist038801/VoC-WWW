@@ -1,36 +1,512 @@
 {
   "SurveyDashboard": [
     {
-      "Name": "NEW CUSTOMER SURVEY",
-      "SurveyID": "S000001",
-      "Author": "John Smith",
-      "Created": "2017/10/13",
-      "Description": "This is meta-data stuff",
-      "Campaigns": ["2017 New Pharmacy Customers", "West Coast Customers", "Online Order Survey"]
+        "surveyId": "92743946-9aa6-46b3-9fab-c8d91032f14d",
+        "name": "Pilot Example Survey",
+        "description": "Example Pilot Survey",
+        "type": "voice",
+        "created": "2018-01-23T23:48:15.576824+00:00",
+        "Author": [
+            {
+                "name": "McKesson Pilot User",
+                "email": "no@no.com"
+            }
+        ],
+        "Language": [
+            "(en-US)",
+            "(es-US)",
+            "(en-US)",
+            "(es-US)"
+        ],
+        "Questions": [
+            {
+                "id": "97910a5a-7d57-4d4e-87f2-ac0a18aad596",
+                "type": "closing",
+                "description": "Pilot Closing",
+                "mode": "both",
+                "Media": null,
+                "TTS": null,
+                "Input": null
+            },
+            {
+                "id": "97988167-07f5-44b9-8440-28659755a5ba",
+                "type": "intro",
+                "description": "Pilot Intro",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "e74a61a1-a9c9-4ffd-9f8b-92fc00e84b9d",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Intro_Master.wav"
+                    }
+                ],
+                "TTS": null,
+                "Input": [
+                    {
+                        "input": "1",
+                        "nextquestionId": "53b7b9d9-b7c6-43d8-8d67-9fbd743ecf34"
+                    },
+                    {
+                        "input": "2",
+                        "nextquestionId": "53b7b9d9-b7c6-43d8-8d67-9fbd743ecf34"
+                    },
+                    {
+                        "input": "3",
+                        "nextquestionId": "53b7b9d9-b7c6-43d8-8d67-9fbd743ecf34"
+                    },
+                    {
+                        "input": "4",
+                        "nextquestionId": "53b7b9d9-b7c6-43d8-8d67-9fbd743ecf34"
+                    },
+                    {
+                        "input": "5",
+                        "nextquestionId": "53b7b9d9-b7c6-43d8-8d67-9fbd743ecf34"
+                    }
+                ]
+            },
+            {
+                "id": "53b7b9d9-b7c6-43d8-8d67-9fbd743ecf34",
+                "type": "1",
+                "description": "Pilot Question 1",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "8abf4f85-2ac5-4991-9e1b-2f0a674a7f70",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Question1_Master.wav"
+                    }
+                ],
+                "TTS": null,
+                "Input": [
+                    {
+                        "input": "1",
+                        "nextquestionId": "586cc7c8-41a1-4fee-96aa-d17a6b1173b3"
+                    },
+                    {
+                        "input": "2",
+                        "nextquestionId": "586cc7c8-41a1-4fee-96aa-d17a6b1173b3"
+                    },
+                    {
+                        "input": "3",
+                        "nextquestionId": "586cc7c8-41a1-4fee-96aa-d17a6b1173b3"
+                    },
+                    {
+                        "input": "4",
+                        "nextquestionId": "586cc7c8-41a1-4fee-96aa-d17a6b1173b3"
+                    },
+                    {
+                        "input": "5",
+                        "nextquestionId": "586cc7c8-41a1-4fee-96aa-d17a6b1173b3"
+                    }
+                ]
+            },
+            {
+                "id": "586cc7c8-41a1-4fee-96aa-d17a6b1173b3",
+                "type": "2",
+                "description": "Pilot Question 2",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "6c9bbff3-c3fc-4f35-9a03-a9a7d939ef91",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Question2_Master.wav"
+                    }
+                ],
+                "TTS": null,
+                "Input": [
+                    {
+                        "input": "1",
+                        "nextquestionId": "d4097830-1e83-491f-9a79-1c3ef61b2d39"
+                    },
+                    {
+                        "input": "2",
+                        "nextquestionId": "d4097830-1e83-491f-9a79-1c3ef61b2d39"
+                    },
+                    {
+                        "input": "3",
+                        "nextquestionId": "d4097830-1e83-491f-9a79-1c3ef61b2d39"
+                    },
+                    {
+                        "input": "4",
+                        "nextquestionId": "d4097830-1e83-491f-9a79-1c3ef61b2d39"
+                    },
+                    {
+                        "input": "5",
+                        "nextquestionId": "d4097830-1e83-491f-9a79-1c3ef61b2d39"
+                    }
+                ]
+            },
+            {
+                "id": "d4097830-1e83-491f-9a79-1c3ef61b2d39",
+                "type": "3",
+                "description": "Pilot Question 3",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "f7b56802-9e09-4859-9526-4df67afb174e",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Question3_Master.wav"
+                    }
+                ],
+                "TTS": null,
+                "Input": [
+                    {
+                        "input": "1",
+                        "nextquestionId": "1b87fb34-cb12-440c-9d25-5daa126261da"
+                    },
+                    {
+                        "input": "2",
+                        "nextquestionId": "1b87fb34-cb12-440c-9d25-5daa126261da"
+                    },
+                    {
+                        "input": "3",
+                        "nextquestionId": "1b87fb34-cb12-440c-9d25-5daa126261da"
+                    },
+                    {
+                        "input": "4",
+                        "nextquestionId": "1b87fb34-cb12-440c-9d25-5daa126261da"
+                    },
+                    {
+                        "input": "5",
+                        "nextquestionId": "1b87fb34-cb12-440c-9d25-5daa126261da"
+                    }
+                ]
+            },
+            {
+                "id": "1b87fb34-cb12-440c-9d25-5daa126261da",
+                "type": "4",
+                "description": "Pilot Question 4",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "886ab596-45c1-4985-a083-2e70a39c6b46",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Question4_Master.wav"
+                    }
+                ],
+                "TTS": null,
+                "Input": [
+                    {
+                        "input": "1",
+                        "nextquestionId": "0dadadcd-da55-472f-92a3-4f1366af15b6"
+                    },
+                    {
+                        "input": "2",
+                        "nextquestionId": "0dadadcd-da55-472f-92a3-4f1366af15b6"
+                    },
+                    {
+                        "input": "3",
+                        "nextquestionId": "0dadadcd-da55-472f-92a3-4f1366af15b6"
+                    },
+                    {
+                        "input": "4",
+                        "nextquestionId": "0dadadcd-da55-472f-92a3-4f1366af15b6"
+                    },
+                    {
+                        "input": "5",
+                        "nextquestionId": "0dadadcd-da55-472f-92a3-4f1366af15b6"
+                    }
+                ]
+            },
+            {
+                "id": "0dadadcd-da55-472f-92a3-4f1366af15b6",
+                "type": "recording",
+                "description": "Pilot Question 5 (recording)",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "5fa3edde-0d31-40fc-86a1-ce7c8464deae",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Comments+Offer_Master.wav"
+                    }
+                ],
+                "TTS": null,
+                "Input": [
+                    {
+                        "input": "1",
+                        "nextquestionId": "97910a5a-7d57-4d4e-87f2-ac0a18aad596"
+                    },
+                    {
+                        "input": "2",
+                        "nextquestionId": "97910a5a-7d57-4d4e-87f2-ac0a18aad596"
+                    },
+                    {
+                        "input": "3",
+                        "nextquestionId": "97910a5a-7d57-4d4e-87f2-ac0a18aad596"
+                    },
+                    {
+                        "input": "4",
+                        "nextquestionId": "97910a5a-7d57-4d4e-87f2-ac0a18aad596"
+                    },
+                    {
+                        "input": "5",
+                        "nextquestionId": "97910a5a-7d57-4d4e-87f2-ac0a18aad596"
+                    }
+                ]
+            }
+        ]
     },
     {
-      "Name": "NEW CUSTOMER SURVEY",
-      "SurveyID": "S000002",
-      "Author": "John Johnson",
-      "Created": "2017/03/01",
-      "Description": "This is meta-data stuff",
-      "Campaigns": ["2017 New Pharmacy Customers", "West Coast Customers", "Online Order Survey"]
+        "surveyId": "db0e6723-8c1d-4c24-8434-7aadfcad9bc8",
+        "name": "survey 1",
+        "description": "test survey",
+        "type": "voice",
+        "created": "2018-01-15T16:27:47.13083+00:00",
+        "Author": [
+            {
+                "name": "Abnur Dune",
+                "email": "abnur.dune@test.com"
+            }
+        ],
+        "Language": [
+            "(en-US)",
+            "(es-US)",
+            "(en-US)",
+            "(es-US)"
+        ],
+        "Questions": [
+            {
+                "id": "fce8f55b-557f-4573-bd73-2d1149469ce1",
+                "type": "closing",
+                "description": "test closing",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "dcbdd184-e4ce-4499-9bea-cfb1c497ec8c",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/testaudio/thank_you.wav"
+                    }
+                ],
+                "TTS": null,
+                "Input": null
+            },
+            {
+                "id": "d9a047f9-9904-4b95-8224-3a39730118d6",
+                "type": "intro",
+                "description": "test intro",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "e74a61a1-a9c9-4ffd-9f8b-92fc00e84b9d",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Intro_Master.wav"
+                    }
+                ],
+                "TTS": null,
+                "Input": null
+            },
+            {
+                "id": "c0ddba5a-ea5a-420e-9a54-2116eca0872b",
+                "type": "1",
+                "description": "test question 1",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "8abf4f85-2ac5-4991-9e1b-2f0a674a7f70",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Question1_Master.wav"
+                    }
+                ],
+                "TTS": [
+                    {
+                        "id": "d40fae6b-87ee-47cd-8209-35dc510db178",
+                        "script": "question 1 tts test"
+                    }
+                ],
+                "Input": null
+            },
+            {
+                "id": "5e743f67-c434-4094-bb56-bc8f1ba3d704",
+                "type": "2",
+                "description": "test question 2",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "6c9bbff3-c3fc-4f35-9a03-a9a7d939ef91",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Question2_Master.wav"
+                    }
+                ],
+                "TTS": [
+                    {
+                        "id": "e1302e82-4be3-4028-b629-fc1b504b7712",
+                        "script": "question 2 tts test"
+                    }
+                ],
+                "Input": null
+            },
+            {
+                "id": "5545aa22-c907-4d6e-8b97-6ebcffa70c9f",
+                "type": "4",
+                "description": "test question 4",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "886ab596-45c1-4985-a083-2e70a39c6b46",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Question4_Master.wav"
+                    }
+                ],
+                "TTS": [
+                    {
+                        "id": "8be6abbd-2841-43d8-b338-1a4d7de068a4",
+                        "script": "question 4 tts test"
+                    }
+                ],
+                "Input": null
+            },
+            {
+                "id": "7ce66dce-e320-4560-a612-6258a9204869",
+                "type": "3",
+                "description": "test question 3",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "f7b56802-9e09-4859-9526-4df67afb174e",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Question3_Master.wav"
+                    }
+                ],
+                "TTS": null,
+                "Input": null
+            },
+            {
+                "id": "7bc48d84-8a1e-4b1c-9c2e-fca2acf28fe3",
+                "type": "recording",
+                "description": "recording question",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "5fa3edde-0d31-40fc-86a1-ce7c8464deae",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Comments+Offer_Master.wav"
+                    }
+                ],
+                "TTS": null,
+                "Input": null
+            }
+        ]
     },
     {
-      "Name": "NEW CUSTOMER SURVEY",
-      "SurveyID": "S000003",
-      "Author": "John Willaims",
-      "Created": "2017/04/01",
-      "Description": "This is meta-data stuff",
-      "Campaigns": ["2017 New Pharmacy Customers", "West Coast Customers", "Online Order Survey"]
-    },
-    {
-      "Name": "NEW CUSTOMER SURVEY",
-      "SurveyID": "S000004",
-      "Author": "John Willaims",
-      "Created": "2017/04/01",
-      "Description": "This is meta-data stuff",
-      "Campaigns": ["2017 New Pharmacy Customers", "West Coast Customers", "Online Order Survey"]
+        "surveyId": "b82c5315-bf7a-40fe-8e5b-c57c9bd7fa4a",
+        "name": "jack test survey 1",
+        "description": "jack test survey",
+        "type": "voice",
+        "created": "2018-01-28T05:49:01.092049+00:00",
+        "Author": [
+            {
+                "name": "Abnur Dune",
+                "email": "abnur.dune@test.com"
+            }
+        ],
+        "Language": [
+            "(en-US)",
+            "(es-US)",
+            "(en-US)",
+            "(es-US)"
+        ],
+        "Questions": [
+            {
+                "id": "f9997e97-2625-41d8-833c-a18f7085bc27",
+                "type": "closing",
+                "description": "test closing",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "dcbdd184-e4ce-4499-9bea-cfb1c497ec8c",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/testaudio/thank_you.wav"
+                    }
+                ],
+                "TTS": null,
+                "Input": null
+            },
+            {
+                "id": "fb240f3a-526c-4eb0-8fe2-3781345f9eb0",
+                "type": "intro",
+                "description": "test intro",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "e74a61a1-a9c9-4ffd-9f8b-92fc00e84b9d",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Intro_Master.wav"
+                    }
+                ],
+                "TTS": null,
+                "Input": null
+            },
+            {
+                "id": "eb19fdcf-0768-4f39-af9e-dbfdcb5f9b76",
+                "type": "1",
+                "description": "test question 1",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "8abf4f85-2ac5-4991-9e1b-2f0a674a7f70",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Question1_Master.wav"
+                    }
+                ],
+                "TTS": [
+                    {
+                        "id": "d40fae6b-87ee-47cd-8209-35dc510db178",
+                        "script": "question 1 tts test"
+                    }
+                ],
+                "Input": null
+            },
+            {
+                "id": "10a04109-102a-4f5f-837f-7778ddbe4b83",
+                "type": "2",
+                "description": "test question 2",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "6c9bbff3-c3fc-4f35-9a03-a9a7d939ef91",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Question2_Master.wav"
+                    }
+                ],
+                "TTS": [
+                    {
+                        "id": "e1302e82-4be3-4028-b629-fc1b504b7712",
+                        "script": "question 2 tts test"
+                    }
+                ],
+                "Input": null
+            },
+            {
+                "id": "4970a2f5-2f92-4dae-afe1-056304846df4",
+                "type": "4",
+                "description": "test question 4",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "886ab596-45c1-4985-a083-2e70a39c6b46",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Question4_Master.wav"
+                    }
+                ],
+                "TTS": [
+                    {
+                        "id": "8be6abbd-2841-43d8-b338-1a4d7de068a4",
+                        "script": "question 4 tts test"
+                    }
+                ],
+                "Input": null
+            },
+            {
+                "id": "7b1cf966-98c0-444a-9efa-f3d7e0b3aa37",
+                "type": "3",
+                "description": "test question 3",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "f7b56802-9e09-4859-9526-4df67afb174e",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Question3_Master.wav"
+                    }
+                ],
+                "TTS": null,
+                "Input": null
+            },
+            {
+                "id": "280dda21-985d-48e5-8360-ff27c9d39db8",
+                "type": "recording",
+                "description": "recording question",
+                "mode": "both",
+                "Media": [
+                    {
+                        "id": "5fa3edde-0d31-40fc-86a1-ce7c8464deae",
+                        "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Comments+Offer_Master.wav"
+                    }
+                ],
+                "TTS": null,
+                "Input": null
+            }
+        ]
     }
-  ]
+]
 }

@@ -2,11 +2,14 @@ import { SET_CURRENT_USER } from '../actions/types';
 import isEmpty from 'lodash/isEmpty';
 import SURVEYS from '../../assets/jsons/surveyDashboard.json'
 import SURVEYDETAILS from '../../assets/jsons/SurveyDetail.json'
-const initialState = {
+const initialState2 = {
   surveys: SURVEYS.SurveyDashboard,
   detail: SURVEYDETAILS.SurveyDetail[0]
 };
-
+const initialState = {
+  surveys: SURVEYS.SurveyDashboard,
+  detail: SURVEYS.SurveyDashboard[0]
+};
 export default (state=initialState, action={}) => {
   switch(action.type) {
     case SET_CURRENT_USER:

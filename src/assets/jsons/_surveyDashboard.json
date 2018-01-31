@@ -1,0 +1,36 @@
+{
+  "SurveyDashboard": [
+    {
+      "Name": "NEW CUSTOMER SURVEY",
+      "SurveyID": "S000001",
+      "Author": "John Smith",
+      "Created": "2017/10/13",
+      "Description": "This is meta-data stuff",
+      "Campaigns": ["2017 New Pharmacy Customers", "West Coast Customers", "Online Order Survey"]
+    },
+    {
+      "Name": "NEW CUSTOMER SURVEY",
+      "SurveyID": "S000002",
+      "Author": "John Johnson",
+      "Created": "2017/03/01",
+      "Description": "This is meta-data stuff",
+      "Campaigns": ["2017 New Pharmacy Customers", "West Coast Customers", "Online Order Survey"]
+    },
+    {
+      "Name": "NEW CUSTOMER SURVEY",
+      "SurveyID": "S000003",
+      "Author": "John Willaims",
+      "Created": "2017/04/01",
+      "Description": "This is meta-data stuff",
+      "Campaigns": ["2017 New Pharmacy Customers", "West Coast Customers", "Online Order Survey"]
+    },
+    {
+      "Name": "NEW CUSTOMER SURVEY",
+      "SurveyID": "S000004",
+      "Author": "John Willaims",
+      "Created": "2017/04/01",
+      "Description": "This is meta-data stuff",
+      "Campaigns": ["2017 New Pharmacy Customers", "West Coast Customers", "Online Order Survey"]
+    }
+  ]
+}
