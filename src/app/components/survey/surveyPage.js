@@ -6,7 +6,7 @@ class SurveyPage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {surveys: null}
   }
 
   componentDidMount() {
@@ -24,7 +24,7 @@ class SurveyPage extends Component {
         .then((response) => response.json())
         .then((response) => {
           console.log('Response', response);
-           this.setState({detail: response})
+           this.setState({surveys: response})
         })
         .catch((error) => {
           console.error('api error: ', error);
@@ -37,13 +37,14 @@ class SurveyPage extends Component {
   }
 
   render() {
+    if(this.state.surveys == null) return null
     let surveys = [] 
-    for (let i = 0; i < this.props.global.surveys.length; i+=2)      
+    for (let i = 0; i < this.state.surveys.length; i+=2)      
     {
       let rowItems = []
 
-      for (let j = 0; j < 2 && i + j < this.props.global.surveys.length; j++) {
-        let survey = this.props.global.surveys[i + j]
+      for (let j = 0; j < 2 && i + j < this.state.surveys.length; j++) {
+        let survey = this.state.surveys[i + j]
         //let campaigns = survey.Campaigns.map((campaign, index) => <li key={index}>{campaign}</li>)
         let campaigns = []
         rowItems.push( 

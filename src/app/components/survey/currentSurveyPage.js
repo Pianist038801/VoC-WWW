@@ -13,6 +13,10 @@ class CurrentSurveyPage extends Component {
     this.loadDataFromServer();
   }
 
+  extractFileName = (string) => {
+    return string.substring(string.lastIndexOf('/') + 1) 
+  }
+
   loadDataFromServer = () => {
       return fetch('https://mirth-service.staging.agentacloud.com:8886/survey', {
         method: 'GET',
@@ -44,13 +48,13 @@ class CurrentSurveyPage extends Component {
   }
   
   render() {
-    return null
-    const _this = this
-    //const item = this.props.global.detail
-    const item = this.state.detail
+    //return null
+
+    const item = this.props.global.detail
+    //const item = this.state.detail
     if(item==null) return null
     let languageItems = [], questions = []
-
+    var introItem, closingItem
     for (let i = 0; i < item.Language.length; i++) {
       if (i == 0)
         languageItems.push(
@@ -68,46 +72,55 @@ class CurrentSurveyPage extends Component {
 
     for (let i = 0; i < item.Questions.length; i++) {
       const question = item.Questions[i]
-      let questionTag = []
-      let options = []
-      if(question.Input == null)
-      for (let optNum = 0; optNum < question.Input.length; optNum++) {
-        options.push(<option>{question.Input[optNum].Next}</option>)
+      if(question.type == "intro")
+      {
+        introItem = question
+        continue
       }
-      for (let j = 0; j < question.Input.length; j++) {
-        const tag = question.Input[j]
-        if (tag.enabled != false)
-          questionTag.push(
-            <li key={j}>
-              <span className="text-lightblue">{tag.Value}</span>
-              <label className="switch">
-                <input type="checkbox" checked={true} onChange={() => this.props.dispatch({ type: 'TOGGLE_QUESTION', questionIndex: i, tagIndex: j })} />
-                <span className="slider-round"></span>
-              </label>
-              <span className="text-lightblue">Go to</span>
-               
-              <select value={tag.Next} style={{marginLeft: '5px',borderColor: 'transparent', color: 'white', backgroundColor: 'rgb(34,152,209)' }}class="form-control" id="sel1"> 
-                {options}
-              </select>
-                 
-            </li>
-          )
-        else {
-          questionTag.push(
-            <li key={j}>
-              <span className="text-lightblue">{tag.Value}</span>
-              <label className="switch">
-                <input type="checkbox" checked={false} onChange={() => this.props.dispatch({ type: 'TOGGLE_QUESTION', questionIndex: i, tagIndex: j })} />
-                <span className="slider-round"></span>
-              </label>
-            </li>
-          )
+      if(question.type == "closing")
+      {
+        closingItem = question
+        continue
+      }
+      let questionTag = []
+      let options = [] 
+      if(question.Input != null) { 
+        for (let optNum = 0; optNum < question.Input.length; optNum++) {
+          options.push(<option>{question.Input[optNum].input}</option>)
         }
-
+        for (let j = 0; j < question.Input.length; j++) {
+          const tag = question.Input[j]
+          if (tag.enabled != false)
+            questionTag.push(
+              <li key={j}>
+                <span className="text-lightblue">{tag.input}</span>
+                <label className="switch">
+                  <input type="checkbox" checked={true} onChange={() => this.props.dispatch({ type: 'TOGGLE_QUESTION', questionIndex: i, tagIndex: j })} />
+                  <span className="slider-round"></span>
+                </label>
+                <span className="text-lightblue">Go to</span>
+                
+                <select value={tag.Next} style={{marginLeft: '5px',borderColor: 'transparent', color: 'white', backgroundColor: 'rgb(34,152,209)' }}   id="sel1"> 
+                  {options}
+                </select> 
+              </li>
+            )
+          else {
+            questionTag.push(
+              <li key={j}>
+                <span className="text-lightblue">{tag.input}</span>
+                <label className="switch">
+                  <input type="checkbox" checked={false} onChange={() => this.props.dispatch({ type: 'TOGGLE_QUESTION', questionIndex: i, tagIndex: j })} />
+                  <span className="slider-round"></span>
+                </label>
+              </li>
+            )
+          } 
+        }
       }
       questions.push(
         <div className="questions" key={i}>
-          <h4>{question.QuestionID}</h4>
+          <h4>{question.id}</h4>
           <div className="cont">
             <div className="close-circle">
               <i className="fa fa-close"></i>
@@ -115,19 +128,17 @@ class CurrentSurveyPage extends Component {
 
             <div className="row">
               <div className="col-sm-6 col-md-7 pr-sm-0">
-                <p className="bg-lightgray top-p text-lightblue mb-3">{question.Description}</p>
+                <p className="bg-lightgray top-p text-lightblue mb-3">{question.description}</p>
                 <h6 className="mb-1">AUDIO - DEFAULT</h6>
-                <p className="audio-name mb-1">{question.Media.Path}</p>
+                <p className="audio-name mb-1">{this.extractFileName(question.Media[0].mediaLocation)}</p>
                 <div className="row">
                 <div className="col-sm-9">
                     <audio id={i} controls>
-                      <source src="offer_x.wav" type="audio/wav" />
+                      <source src={question.Media[0].mediaLocation} type="audio/wav" />
                       Your browser does not support the audio element.
                     </audio>
                 </div>    
-                <div className="col-sm-1"> 
-                    <i className="fa fa-volume-up" style={{ fontSize: 20, color: 'black' }}></i> 
-                </div>
+                 
                 <div className="col-sm-1" onClick={() => document.getElementById("datafile"+i).click()}> 
                     <input
                       type="file"
@@ -139,8 +150,8 @@ class CurrentSurveyPage extends Component {
                   <i className="fa fa-cog"  style={{ fontSize: 20, color: 'black' }}></i>
                 </div>
               </div>  
-                <h6 className="mt-4">TTS</h6>
-                <p className="bg-lightgray p-tts">{question.TextToSpeech.TTS}</p>
+                {question.TTS!=null && <h6 className="mt-4">TTS</h6>}
+                {question.TTS !=null && <p className="bg-lightgray p-tts">{question.TTS[0].script}</p>}
               </div>
               <div className="col-sm-6 col-md-5">
                 <ul className="list-unstyled">
@@ -152,7 +163,8 @@ class CurrentSurveyPage extends Component {
         </div>
       )
     }
-
+    console.log('CLOSE=',closingItem)
+    console.log('INTRO=',introItem)
     return (
       <section className="left-section">
         <div className="navicon">
@@ -162,7 +174,7 @@ class CurrentSurveyPage extends Component {
           <div className="new-voice-survey">
             <div className="row">
               <div className="col-8">
-                <h4>{item.Name}</h4>
+                <h4>{item.name}</h4>
               </div>
               <div className="col-4">
               { 
@@ -180,7 +192,7 @@ class CurrentSurveyPage extends Component {
             <div className="cont">
               <a className="text-lightblue" href="#">VOICE</a>
               <p><span className="mr-2">Edited</span><span className="mr-2">{item.Modified}</span><span className="mr-3">{item.Author.Name}</span><a className="show-history" href="#">Show History</a></p>
-              <p className="bg-lightgray">{item.Description}</p>
+              <p className="bg-lightgray">{item.description}</p>
               {languageItems}
               <button className="btn bg-lightblue btn-settings" type="button">
                 <i className="fa fa-plus-circle"></i><span>Add Language</span>
@@ -191,21 +203,18 @@ class CurrentSurveyPage extends Component {
           <div className="row">
             <div className="col-sm-6">
               <div className="intro-outro">
-                <h4>Intro</h4>
-                <div className="cont">
+                <h4>{introItem.description}</h4>
+                {introItem.Media!=null && <div className="cont">
                   <h6 className="mb-1">AUDIO - DEFAULT</h6>
-                  <p className="audio-name mb-1">{item.Intro.Media.Path}</p>
+                  <p className="audio-name mb-1">{this.extractFileName(introItem.Media[0].mediaLocation)}</p>
                   <div className="row">
                     <div className="col-sm-9">
                         <audio id="intro" controls>
-                          <source src="offer_x.wav" type="audio/wav" />
+                          <source src={introItem.Media[0].mediaLocation} type="audio/wav" />
                           Your browser does not support the audio element.
                         </audio>
-                    </div>    
-                    <div className="col-sm-1"> 
-                        <i className="fa fa-volume-up" style={{ fontSize: 20, color: 'black' }}></i> 
-                    </div>
-                    <div className="col-sm-1" onClick={() => document.getElementById("datafile_intro").click()}> 
+                    </div>     
+                    <div className="col-sm-1" onClick={() => document.getElementById("datafile_intro").click()}>
                         <input
 													type="file"
 													id="datafile_intro"
@@ -216,27 +225,24 @@ class CurrentSurveyPage extends Component {
                       <i className="fa fa-cog"  style={{ fontSize: 20, color: 'black' }}></i>
                     </div>
                   </div>  
-                  <h6 className="mt-4">TTS</h6>
-                  <p className="bg-lightgray p-tts">{item.Intro.TextToSpeech.TTS}</p> 
-                </div>
+                  {introItem.TTS!=null && <h6 className="mt-4">TTS</h6>}
+                  {introItem.TTS!=null && <p className="bg-lightgray p-tts">{introItem.TTS[0].script}</p>}
+                </div>}
               </div>
             </div>
             <div className="col-sm-6">
               <div className="intro-outro">
-                <h4>Outro</h4>
+                <h4>{closingItem.description}</h4>
                 <div className="cont">
-                  <h6 className="mb-1">AUDIO - DEFAULT</h6>
-                  <p className="audio-name mb-1">{item.Closing.Media.Path}</p>
-                  <div className="row">
+                  {closingItem.Media!=null && <h6 className="mb-1">AUDIO - DEFAULT</h6>}
+                  {closingItem.Media!=null && <p className="audio-name mb-1">{this.extractFileName(closingItem.Media[0].mediaLocation)}</p>}
+                  {closingItem.Media!=null && <div className="row">
                     <div className="col-sm-9">
                         <audio id="outro" controls>
-                          <source src="offer_x.wav" type="audio/wav" />
+                          <source src={closingItem.Media[0].mediaLocation} type="audio/wav" />
                           Your browser does not support the audio element.
                         </audio>
-                    </div>    
-                    <div className="col-sm-1"> 
-                        <i className="fa fa-volume-up" style={{ fontSize: 20, color: 'black' }}></i> 
-                    </div>
+                    </div>     
                     <div className="col-sm-1" onClick={() => document.getElementById("datafile_outro").click()}> 
                         <input
 													type="file"
@@ -247,17 +253,18 @@ class CurrentSurveyPage extends Component {
 												/>
                       <i className="fa fa-cog"  style={{ fontSize: 20, color: 'black' }}></i>
                     </div>
-                  </div>  
-                  <h6 className="mt-4">TTS</h6>
-                  <p className="bg-lightgray p-tts">{item.Closing.TextToSpeech.TTS}</p> 
+                  </div>}
+                  {closingItem.TTS!=null && <h6 className="mt-4">TTS</h6>}
+                  {closingItem.TTS!=null && <p className="bg-lightgray p-tts">{closingItem.TTS[0].script}</p>}
                 </div>
+                
               </div>
             </div>
           </div>
 
           {questions}
           <div className="btn-add-question pt-2">
-            <button className="btn bg-lightblue btn-add-question mr-3" type="button"> 
+            <button className="btn bg-lightblue btn-add-question mr-3" type="button">
               <span>ADD QUESTION</span>
             </button>
           </div>
