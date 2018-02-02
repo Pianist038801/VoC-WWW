@@ -42,7 +42,7 @@ class CurrentSurveyPage extends Component {
            this.setState({detail: response[0]})
         })
         .catch((error) => {
-          console.error('survey api error: ', error);
+          console.error('survey api error --: ', error);
         });
   }
 
@@ -66,7 +66,7 @@ class CurrentSurveyPage extends Component {
     if(item==null) return <ProgressView ref={e => this.progressView = e} />
     let languageItems = [], questions = []
     var introItem, closingItem
-    for (let i = 0; i < item.Language.length; i++) {
+    for (let i = 0; item.Language!=null && i < item.Language.length; i++) {
       if (i == 0)
         languageItems.push(
           <button className="btn bg-lightblue btn-settings active" type="button" key={i}>
@@ -254,7 +254,7 @@ class CurrentSurveyPage extends Component {
                           Your browser does not support the audio element.
                         </audio>
                     </div>     
-                    <div className="col-sm-1" onClick={() => document.getElementById("datafile_outro").click()}> 
+                    <div className="col-sm-1" onClick={() => document.getElementById("datafile_outro").click()}>
                         <input
 													type="file"
 													id="datafile_outro"
@@ -280,8 +280,8 @@ class CurrentSurveyPage extends Component {
             </button>
           </div>
           {//Modal
-            <div className="survey-file-browse w-100 modal fade" id="survey-file" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered" role="document"> 
+            <div className="survey-file-browse w-100 modal fade" id="survey-file" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal-dialog modal-dialog-centered" role="document">
               <div className="cont"> 
                 <div className="row mb-4"> 
                   <div className="col-sm-8">
@@ -698,13 +698,16 @@ class CurrentSurveyPage extends Component {
     );
   }
 }
+
 function mapStateToProps(state) {
   const global = state.global
   return { global };
 }
+
 function mapDispatchToProps(dispatch) {
   return { dispatch };
 }
+
 export default connect(mapStateToProps, mapDispatchToProps)(
   CurrentSurveyPage
 );
