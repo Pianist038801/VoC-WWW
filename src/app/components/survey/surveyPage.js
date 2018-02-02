@@ -61,7 +61,7 @@ class SurveyPage extends Component {
         //let campaigns = survey.Campaigns.map((campaign, index) => <li key={index}>{campaign}</li>)
         let campaigns = []
         rowItems.push( 
-          <div className="col-md-6" key={j} onClick={()=>this.gotoDetail(survey.surveyId)} >
+          <div className="col-md-6" key={j} onClick={()=>this.gotoDetail(survey.id)} >
             <div className="cont">
               <p className="fw-500 mb-1">{survey.name}</p>
               <p className="mb-0 lh-4">{survey.Author[0].name} - {new Date(survey.created).toISOString().slice(0, 10)}</p>

@@ -28,6 +28,7 @@ class CurrentSurveyPage extends Component {
   }
 
   loadDataFromServer = () => {
+    console.log('STATE ID=', this.state.id)
       return fetch(`https://mirth-service.staging.agentacloud.com:8886/survey/id/${this.state.id}`, {
         method: 'GET',
         headers: {
@@ -41,7 +42,7 @@ class CurrentSurveyPage extends Component {
            this.setState({detail: response[0]})
         })
         .catch((error) => {
-          console.error('api error: ', error);
+          console.error('survey api error: ', error);
         });
   }
 
