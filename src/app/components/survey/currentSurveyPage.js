@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'; 
-import { ProgressView } from './progress-view'
-
+import { ProgressView } from './progress-view' 
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 class CurrentSurveyPage extends Component {
 
   constructor(props) {
     super(props);
     console.log('PROPS=', props)
-    this.state = {detail: null, editStatus: false, id: props.global.data.surveyId}
+    this.state = {modal: false,detail: null, editStatus: false, id: props.global.data.surveyId}
   }
 
   componentDidMount() {
@@ -44,6 +44,11 @@ class CurrentSurveyPage extends Component {
         .catch((error) => {
           console.error('survey api error --: ', error);
         });
+  }
+  toggle = () => {
+    this.setState({
+      modal: !this.state.modal
+    });
   }
 
   loadFile = (files, id) => {
@@ -150,7 +155,7 @@ class CurrentSurveyPage extends Component {
                     </audio>
                 </div>    
                  
-                <div className="col-sm-1" onClick={() => document.getElementById("datafile"+i).click()}> 
+                <div className="col-sm-1" onClick={() => document.getElementById("datafile"+i).click()}>
                     <input
                       type="file"
                       id={"datafile"+i}
@@ -176,6 +181,86 @@ class CurrentSurveyPage extends Component {
     }
     console.log('CLOSE=',closingItem)
     console.log('INTRO=',introItem)
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <Button color="danger" onClick={()=>this.setState({modal: true})}>Open</Button>
+        <Modal isOpen={this.state.modal} toggle={this.toggle} className="survey-file-browse w-100">
+          {1==2 && <View><ModalHeader toggle={this.state.toggle}>Modal title</ModalHeader>
+          <ModalBody>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+          </ModalBody>
+          <ModalFooter>
+            <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
+            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+          </ModalFooter> </View>}
+          
+          
+          <div className="cont m-0"> 
+            <div className="row mb-4"> 
+              <div className="col-sm-8">
+                <span className="fw-500">Browsing server</span>   
+                <button className="btn bg-lightblue btn-browse" type="button">
+                  <span>Browse Computer</span>
+                </button>           
+              </div>       
+    
+              <div className="col-sm-4">
+                <div className="custom-select-option float-sm-right mt-3 mt-sm-1">
+                  <select className="form-control">    
+                      <option selected>Select Language</option>
+                      <option>Lorem</option>
+                      <option>Ipsum</option>
+                      <option>Dolor</option>
+                  </select>
+                </div>           
+              </div> 
+            </div>
+    
+            <div className="row"> 
+              <div className="col-sm-4 col-md-3">
+                <div className="preview-file">
+                  <i className="fa fa-play-circle text-lightblue"></i> <span>Preview File</span>
+                </div>
+                <ul className="list-unstyled">
+                  <li>Uploader: Jim Smith</li>
+                  <li>Uploaded: 10/15/17</li>
+                </ul>
+                <ul className="list-unstyled">
+                  <li>Test Survey</li>
+                  <li>Cust Service Survey</li>
+                  <li>Survey 003</li>
+                </ul>
+              </div>
+    
+              <div className="col-sm-8 col-md-9 pl-sm-4">  
+                <div className="scroll-style ml-sm-2">
+                  <table className="table border-0">
+                    <tr>
+                      <td>File Name 01</td>
+                      <td>Uploaded  03/14/17</td>      
+                      <td>4.4 s</td>                                                              
+                    </tr>
+                    <tr className="active">
+                      <td>File Name 01</td>
+                      <td>Uploaded  03/14/17</td>      
+                      <td>4.4 s</td>                                                              
+                    </tr>
+                  </table>            
+                </div>
+              </div>
+            </div>
+    
+            <button className="btn bg-lightblue btn-use-file" type="button">
+              <span>USE FILE</span>
+            </button>
+    
+            <button className="btn btn-cancel" type="button" data-dismiss="modal">
+              <span>CANCEL</span>
+            </button> 
+          </div>
+        </Modal>
+      </div>
+    );
     return (
       <section className="left-section">
         <div className="navicon">
@@ -280,9 +365,9 @@ class CurrentSurveyPage extends Component {
               <span>ADD QUESTION</span>
             </button>
           </div>
-
-          {//Modal
-            <div className="survey-file-browse w-100 modal fade" id="survey-file" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#survey" data-whatever="@mdo">Open modal for @mdo</button>
+           
+          {<div className="survey-file-browse w-100 modal fade" id="survey" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog modal-dialog-centered" role="document">
               <div className="cont"> 
                 <div className="row mb-4"> 
@@ -334,351 +419,6 @@ class CurrentSurveyPage extends Component {
                           <td>Uploaded  03/14/17</td>      
                           <td>4.4 s</td>                                                              
                         </tr>
-                        <tr className="active">
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded  03/14/17</td>      
-                          <td>4.4 s</td>                                                              
-                        </tr>
                       </table>            
                     </div>
                   </div> 
@@ -693,8 +433,10 @@ class CurrentSurveyPage extends Component {
                 </button> 
               </div> 
             </div>
-          </div>
-          }
+          </div>}
+          <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@getbootstrap">Open modal for @getbootstrap</button>
+
+     
         </div>
       </section>
     );
