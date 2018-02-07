@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {ProgressView} from './progress-view'
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import AWS from 'aws-sdk';
-
+import config from '../../../../secret.js'
 const _detail = {
   "id": "98a89d10-013e-4efe-ba03-22af25ce53b2",
   "name": "Daiki Monday Test",
