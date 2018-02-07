@@ -2,24 +2,120 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {ProgressView} from './progress-view'
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+import AWS from 'aws-sdk';
+
+const _detail = {
+  "id": "98a89d10-013e-4efe-ba03-22af25ce53b2",
+  "name": "Daiki Monday Test",
+  "description": "Monday Test",
+  "type": "voice",
+  "orgId": "c56fa81c-d579-448d-82e8-6da2e5fbec7a",
+  "created": "2018-02-05T04:48:07.407564+00:00",
+  "Author": [
+    {
+      "id": "c3068fbf-5d45-41b2-94ad-0f368ba363fb",
+      "name": "McKesson Pilot User",
+      "email": "no@no.com"
+    }
+  ],
+  "Language": null,
+  "Campaigns": null,
+  "Questions": [
+    {
+      "id": "97910a5a-7d57-4d4e-87f2-ac0a18aad596",
+      "type": "closing",
+      "order": 0,
+      "description": "Pilot Closing",
+      "languageId": "c844f028-4351-41ab-be22-a5c1741cd859",
+      "mode": "both",
+      "Media": null,
+      "TTS": null,
+      "Input": null
+    }, {
+      "id": "97988167-07f5-44b9-8440-28659755a5ba",
+      "type": "intro",
+      "order": 0,
+      "description": "Pilot Intro",
+      "languageId": "c844f028-4351-41ab-be22-a5c1741cd859",
+      "mode": "both",
+      "Media": [
+        {
+          "id": "e74a61a1-a9c9-4ffd-9f8b-92fc00e84b9d",
+          "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Intro_Master.wav"
+        }
+      ],
+      "TTS": null,
+      "Input": [
+        {
+          "input": "1",
+          "nextquestionId": "53b7b9d9-b7c6-43d8-8d67-9fbd743ecf34"
+        }, {
+          "input": "2",
+          "nextquestionId": "53b7b9d9-b7c6-43d8-8d67-9fbd743ecf34"
+        }, {
+          "input": "3",
+          "nextquestionId": "53b7b9d9-b7c6-43d8-8d67-9fbd743ecf34"
+        }, {
+          "input": "4",
+          "nextquestionId": "53b7b9d9-b7c6-43d8-8d67-9fbd743ecf34"
+        }, {
+          "input": "5",
+          "nextquestionId": "53b7b9d9-b7c6-43d8-8d67-9fbd743ecf34"
+        }
+      ]
+    }
+  ]
+}
+
 class CurrentSurveyPage extends Component {
 
   constructor(props) {
     super(props);
     console.log('PROPS=', props)
     this.state = {
+      selectedQuestion: 0,
+      allQuestions: null,
+      description: '',
+      tts: '',
       modal: false,
+      playPreview: false,
       detail: null,
       editStatus: false,
       id: props.global.data.surveyId
     }
   }
 
-  componentDidMount() {
-    this.showProgressView();
-    this.loadDataFromServer();
+  getQuestions = () => {
+    return fetch(`https://mirth-service.staging.agentacloud.com:8878/question`, {
+      method: 'GET',
+      headers: {
+        Authorization: 'Basic dm9jLW1ja2Vzc29uOlE2YUdLOGhUOHE3ZTlSZ0dxU2hRc2c5VQ==',
+        'Content-Type': 'application/json'
+      }
+    }).then((response) => response.json()).then((response) => {
+      console.log('Response', response); 
+      let tts = ''
+      if(response[0].TTS!=null)
+        tts = response[0].TTS.script
+      this.setState({allQuestions: response, tts: tts, description: response[0].description})
+    }).catch((error) => {
+      console.error('getQuestion api error --: ', error);
+    });
   }
 
+  componentWillMount() {
+    this.showProgressView();
+    this.initialize();
+  }
+
+  initialize = () => {
+    this.loadDataFromServer();
+    this.getQuestions();
+  }
+
+  componentDidMount(){
+     
+  }
   showProgressView = () => {
     this.progressView && this
       .progressView
@@ -45,41 +141,145 @@ class CurrentSurveyPage extends Component {
         'Content-Type': 'application/json'
       }
     }).then((response) => response.json()).then((response) => {
-      console.log('Response', response);
+      console.log('DETAIL=', response[0])
       this.setState({detail: response[0]})
     }).catch((error) => {
       console.error('survey api error --: ', error);
     });
   }
+
   toggle = () => {
     this.setState({
       modal: !this.state.modal
     });
   }
 
+  uploadToS3 = (file) => {
+    let _this = this
+    const config = {
+      params: { Bucket: 'voc-media' },
+      region: 'us-west-2',
+      accessKeyId: 'AKIAI3BZQUBKCCBKRYSA',
+      secretAccessKey: '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',
+    }
+    const key = 'surveys/testaudio/' + file.name
+    //const buffer = new Buffer(file.data_uri, 'base64')
+    var s3 = new AWS.S3(config); 
+    //
+    s3.upload({
+      Key: key,
+      Body: file,
+      ContentType: file.filetype,
+      ACL: 'public-read'
+    }, function(err, data) {
+      if (err) {
+        console.log('S3_Error=', err)
+      } else {
+        let newFileUrl = data.Location
+        console.log('URL=', newFileUrl)
+        let newQuestionData = _this.state.currentQuestion
+        console.log('QuestionData=', newQuestionData)
+        newQuestionData.description = _this.state.description
+        console.log('DESC=')
+        newQuestionData.TTS = {script: _this.state.tts}
+        console.log('TTS=')
+        newQuestionData.Media = {mediaLocation : newFileUrl}
+        console.log('Media=')
+        console.log(JSON.stringify(newQuestionData))
+        _this.updateQuestion(newQuestionData)
+        
+      }
+    })
+  }
+
+  updateQuestion = (question) => {
+    return fetch('https://mirth-service.staging.agentacloud.com:8877/question', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(question)
+    }).then((response) => { 
+      console.log('SAVE RESPONSE', response)
+      //load audio
+      var source = document.getElementById('source' + this.state.questionId)
+      source.src = question.Media.mediaLocation
+      var audio = document.getElementById(this.state.questionId);
+      audio.load();
+      this.initialize()
+    }).catch((error) => {
+      console.error('survey api error --: ', error);
+    });
+  }
+
   loadFile = (files, id) => {
-    const f = files[0];
-    var name = f.name;
-    var sound = document.getElementById(id);
+    const file = files[0];
+    //var name = f.name;
+    //var sound = document.getElementById(id);
+    //upload to S3
     var reader = new FileReader();
+    let _this = this;
     reader.onload = function (e) {
-      sound.src = this.result;
-      sound.controls = true;
+      _this.setState({newFile: file})
+      //_this.uploadToS3(file)
+      //sound.src = this.result;
+      //sound.controls = true;
     };
-    reader.readAsDataURL(f);
+    reader.readAsDataURL(file);
+  }
+
+  saveNewFile = () => {
+    this.setState({modal: false})
+    this.uploadToS3(this.state.newFile)
+  }
+
+  useFile = () => {
+    this.setState({modal: false})
+    let newQuestionData = this.state.currentQuestion
+    console.log('ID=', this.state.questionId, ' QuestionData=', this.state.currentQuestion)
+    newQuestionData.description = this.state.description
+    newQuestionData.TTS = {script: this.state.tts}
+    newQuestionData.Media = {mediaLocation : this.state.allQuestions[this.state.selectedQuestion].Media.mediaLocation}
+    console.log('UpdateRequest=', JSON.stringify(newQuestionData))
+    this.updateQuestion(newQuestionData)
   }
 
   render() {
     //return null
-
+    var questionList = []
+    if(this.state.allQuestions!=null){
+      console.log('AllQuestion not null')
+      for(let i = 0;  i < this.state.allQuestions.length; i++){
+        if(this.state.allQuestions[i].Media==null) continue
+        if(this.state.selectedQuestion == i)
+        questionList.push(
+        <tr className="active">
+          <td>{this.extractFileName(this.state.allQuestions[i].Media.mediaLocation)}</td>
+        </tr>
+        )
+        else
+        {
+          let tts = ''
+          if(this.state.allQuestions[i].TTS!=null)
+            tts = this.state.allQuestions[i].TTS.script
+        questionList.push(
+          <tr onClick={()=>this.setState({selectedQuestion: i, description: this.state.allQuestions[i].description, tts: tts})}>
+            <td>{this.extractFileName(this.state.allQuestions[i].Media.mediaLocation)}</td>
+          </tr>
+        )
+        }
+      }
+    }
+    
     const item = this.state.detail
       //const item = this.state.detail
       if (item == null) 
         return <ProgressView ref={e => this.progressView = e}/>
       let languageItems = [],
         questions = []
-      var introItem,
-        closingItem
+      var introItem, introIndex,
+        closingItem, closingIndex
 
       for (let i = 0; item.Language != null && i < item.Language.length; i++) {
         if (i == 0) 
@@ -101,10 +301,12 @@ class CurrentSurveyPage extends Component {
         const question = item.Questions[i]
         if (question.type == "intro") {
           introItem = question
+          introIndex = i
           continue
         }
         if (question.type == "closing") {
           closingItem = question
+          closingIndex = i
           continue
         }
         let questionTag = []
@@ -175,20 +377,14 @@ class CurrentSurveyPage extends Component {
                   <div className="row">
                     <div className="col-sm-9">
                       <audio id={i} controls>
-                        <source src={question.Media[0].mediaLocation} type="audio/wav"/>
+                        <source id={'source'+i} src={question.Media[0].mediaLocation} type="audio/wav"/>
                         Your browser does not support the audio element.
                       </audio>
                     </div>
 
                     <div
                       className="col-sm-1"
-                      onClick={() => document.getElementById("datafile" + i).click()}>
-                      <input
-                        type="file"
-                        id={"datafile" + i}
-                        name="datafile"
-                        className="datafile"
-                        onChange={(e) => this.loadFile(e.target.files, i)}/>
+                      onClick={() => {this.setState({modal: true, currentQuestion: question, questionId: i}) }}>
                       <i
                         className="fa fa-cog"
                         style={{
@@ -272,23 +468,14 @@ class CurrentSurveyPage extends Component {
                     <p className="audio-name mb-1">{this.extractFileName(introItem.Media[0].mediaLocation)}</p>
                     <div className="row">
                       <div className="col-sm-9">
-                        <audio id="intro" controls>
-                          <source src={introItem.Media[0].mediaLocation} type="audio/wav"/>
+                        <audio id={introIndex} controls>
+                          <source id={'source'+introIndex}  src={introItem.Media[0].mediaLocation} type="audio/wav"/>
                           Your browser does not support the audio element.
                         </audio>
                       </div>
                       <div
                         className="col-sm-1"
-                        onClick={() => {
-                          //document.getElementById("datafile_intro").click();
-                          this.setState({modal: true})  
-                        }}>
-                        <input
-                          type="file"
-                          id="datafile_intro"
-                          name="datafile"
-                          className="datafile"
-                          onChange={(e) => this.loadFile(e.target.files, 'intro')}/>
+                        onClick={() => { this.setState({modal: true, currentQuestion: introItem, questionId: introIndex }) }}>
                         <i
                           className="fa fa-cog"
                           style={{
@@ -311,20 +498,14 @@ class CurrentSurveyPage extends Component {
                     {closingItem.Media != null && <p className="audio-name mb-1">{this.extractFileName(closingItem.Media[0].mediaLocation)}</p>}
                     {closingItem.Media != null && <div className="row">
                       <div className="col-sm-9">
-                        <audio id="outro" controls>
-                          <source src={closingItem.Media[0].mediaLocation} type="audio/wav"/>
+                        <audio id={closingIndex} controls>
+                          <source id={'source'+closingIndex} src={closingItem.Media[0].mediaLocation} type="audio/wav"/>
                           Your browser does not support the audio element.
                         </audio>
                       </div>
                       <div
                         className="col-sm-1"
-                        onClick={() => document.getElementById("datafile_outro").click()}>
-                        <input
-                          type="file"
-                          id="datafile_outro"
-                          name="datafile"
-                          className="datafile"
-                          onChange={(e) => this.loadFile(e.target.files, 'outro')}/>
+                        onClick={() => { this.setState({modal: true, currentQuestion: closingItem, questionId: closingIndex}) }}>
                         <i
                           className="fa fa-cog"
                           style={{
@@ -337,11 +518,10 @@ class CurrentSurveyPage extends Component {
                     <h6 className="mt-4">TTS</h6>
                     {closingItem.TTS != null && <p className="bg-lightgray p-tts">{closingItem.TTS[0].script}</p>}
                   </div>
-
                 </div>
               </div>
             </div>
-}
+          }
 
             {questions}
             <div className="btn-add-question pt-2">
@@ -349,12 +529,6 @@ class CurrentSurveyPage extends Component {
                 <span>ADD QUESTION</span>
               </button>
             </div>
-            <button
-              type="button"
-              className="btn btn-primary"
-              data-toggle="modal"
-              data-target="#survey"
-              data-whatever="@mdo">Open modal for @mdo</button>
             <Modal
               isOpen={this.state.modal}
               toggle={this.toggle}
@@ -363,17 +537,25 @@ class CurrentSurveyPage extends Component {
                 <div className="row mb-4">
                   <div className="col-sm-8">
                     <span className="fw-500">Browsing server</span>
-                    <button className="btn bg-lightblue btn-browse" type="button">
+                    <button
+                      className="btn bg-lightblue btn-browse"
+                      type="button"
+                      onClick={() => document.getElementById("datafile_modal").click()}>
                       <span>Browse Computer</span>
+                      <input
+                        type="file"
+                        id={"datafile_modal"} 
+                        name="datafile"
+                        className="datafile"
+                        onChange={(e) => this.loadFile(e.target.files, this.state.questionId)}/>
                     </button>
                   </div>
                   <div className="col-sm-4">
                     <div className="custom-select-option float-sm-right mt-3 mt-sm-1">
                       <select className="form-control">
                         <option selected>Select Language</option>
-                        <option>Lorem</option>
-                        <option>Ipsum</option>
-                        <option>Dolor</option>
+                        <option>English</option>
+                        <option>Spanish</option>
                       </select>
                     </div>
                   </div>
@@ -381,51 +563,89 @@ class CurrentSurveyPage extends Component {
                 <div className="row">
                   <div className="col-sm-4 col-md-3">
                     <div className="preview-file">
-                      <i className="fa fa-play-circle text-lightblue"></i>
+                      <audio id='preview' controls style={{position: 'absolute', left:-500, right:0}}>
+                        <source id='previewSource' src={this.state.allQuestions!=null && this.state.allQuestions[this.state.selectedQuestion].Media.mediaLocation} />
+                        Your browser does not support the audio element.
+                      </audio>
+                      {this.state.playPreview==true ?
+                      <i className="fa fa-stop-circle text-lightblue" onClick={()=>{
+                        this.setState({playPreview: false}); 
+                        document.getElementById("preview").pause()}}></i>
+                      :
+                      <i className="fa fa-play-circle text-lightblue" onClick={()=>{
+                        this.setState({playPreview: true});
+                        var source = document.getElementById('previewSource');
+                        source.src = this.state.allQuestions[this.state.selectedQuestion].Media.mediaLocation;
+                        var audio = document.getElementById("preview");
+                        audio.load();
+                        audio.play()
+                      }}></i>
+                      } 
                       <span>Preview File</span>
                     </div>
                     <ul className="list-unstyled">
                       <li>Uploader: Jim Smith</li>
                       <li>Uploaded: 10/15/17</li>
                     </ul>
+                    <div style={{ height: 60, overflowY: 'scroll' }}>
+                      <ul className="list-unstyled">
+                        <li>{this.state.allQuestions!=null && this.state.allQuestions[this.state.selectedQuestion].surveyName}</li>
+                      </ul>
+                    </div>
                     <ul className="list-unstyled">
-                      <li>Test Survey</li>
-                      <li>Cust Service Survey</li>
-                      <li>Survey 003</li>
+                      <li style={{marginTop: '20px',marginBottom: '5px'}}><input
+                        type="text"
+                        value={this.state.description}
+                        placeholder="Description"
+                        onChange={(val) => {
+                          this.setState({description: val.target.value});
+                        }}
+                        ref={(r) => (this.description = r)}
+                        style={{
+                          width: '180px',
+                          fontSize: 15
+                        }}/>
+                      </li>
+                      <li style={{marginBottom: '5px'}}><input
+                        type="text"
+                        value={this.state.tts}
+                        placeholder="TTS"
+                        onChange={(val) => {
+                          this.setState({tts: val.target.value});
+                        }}
+                        ref={(r) => (this.tts = r)}
+                        style={{
+                          width: '180px', 
+                          fontSize: 15
+                        }}/>
+                      </li>
+                      <li style={{marginBottom: '5px'}}>
+                        <button className="btn bg-lightblue btn-use-file" type="button" onClick={()=>{this.saveNewFile()}}>
+                          <span>SAVE</span>
+                        </button>
+                      </li>
                     </ul>
                   </div>
                   <div className="col-sm-8 col-md-9 pl-sm-4">
                     <div className="scroll-style ml-sm-2">
                       <table className="table border-0">
-                        <tr>
-                          <td>File Name 01</td>
-                          <td>Uploaded 03/14/17</td>
-                          <td>4.4 s</td>
-                        </tr>
-                        <tr className="active">
-                          <td>File Name 01</td>
-                          <td>Uploaded 03/14/17</td>
-                          <td>4.4 s</td>
-                        </tr>
+                        {questionList}
                       </table>
                     </div>
                   </div>
                 </div>
-                <button className="btn bg-lightblue btn-use-file" type="button">
+                <button className="btn bg-lightblue btn-use-file" type="button" onClick={()=>{this.useFile()}}>
                   <span>USE FILE</span>
                 </button>
-                <button className="btn btn-cancel" type="button" data-dismiss="modal">
+                <button
+                  className="btn btn-cancel"
+                  type="button"
+                  onClick={() => this.setState({modal: false})}
+                  data-dismiss="modal">
                   <span>CANCEL</span>
                 </button>
               </div>
             </Modal>
-            <button
-              type="button"
-              className="btn btn-primary"
-              data-toggle="modal"
-              data-target="#exampleModal"
-              data-whatever="@getbootstrap">Open modal for @getbootstrap</button>
-
           </div>
         </section>
       );
