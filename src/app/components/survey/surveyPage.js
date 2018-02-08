@@ -45,7 +45,7 @@ class SurveyPage extends Component {
     });
   }
 
-  gotoDetail = (surveyID, surveyName) => {
+  gotoDetail = (surveyID, surveyName, description) => {
     browserHistory.push('current-survey', {bomID: 2})
     this
       .props
@@ -53,7 +53,8 @@ class SurveyPage extends Component {
         type: 'SET_DATA',
         data: {
           surveyId: surveyID,
-          surveyName: surveyName
+          surveyName: surveyName,
+          surveyDescription: description
         }
       })
   }
@@ -115,7 +116,7 @@ class SurveyPage extends Component {
 
   render() {
     if (this.state.surveys == null) 
-      return <p>asdasdf</p>
+      return <ProgressView ref={e => this.progressView = e}/>
     let surveys = []
     for (let i = 0; i < this.state.surveys.length; i += 2) {
       let rowItems = []
@@ -129,7 +130,7 @@ class SurveyPage extends Component {
           <div
             className="col-md-6"
             key={j}
-            onClick={() => this.gotoDetail(survey.id, survey.name)}>
+            onClick={() => this.gotoDetail(survey.id, survey.name, survey.description)}>
             <div className="cont">
               <p className="fw-500 mb-1">{survey.name}</p>
               <p className="mb-0 lh-4">{survey.Author[0].name}

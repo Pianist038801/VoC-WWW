@@ -4,68 +4,6 @@ import {ProgressView} from './progress-view'
 import {Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 import AWS from 'aws-sdk';
 import config from '../../../../secret.js'
-const _detail = {
-  "id": "98a89d10-013e-4efe-ba03-22af25ce53b2",
-  "name": "Daiki Monday Test",
-  "description": "Monday Test",
-  "type": "voice",
-  "orgId": "c56fa81c-d579-448d-82e8-6da2e5fbec7a",
-  "created": "2018-02-05T04:48:07.407564+00:00",
-  "Author": [
-    {
-      "id": "c3068fbf-5d45-41b2-94ad-0f368ba363fb",
-      "name": "McKesson Pilot User",
-      "email": "no@no.com"
-    }
-  ],
-  "Language": null,
-  "Campaigns": null,
-  "Questions": [
-    {
-      "id": "97910a5a-7d57-4d4e-87f2-ac0a18aad596",
-      "type": "closing",
-      "order": 0,
-      "description": "Pilot Closing",
-      "languageId": "c844f028-4351-41ab-be22-a5c1741cd859",
-      "mode": "both",
-      "Media": null,
-      "TTS": null,
-      "Input": null
-    }, {
-      "id": "97988167-07f5-44b9-8440-28659755a5ba",
-      "type": "intro",
-      "order": 0,
-      "description": "Pilot Intro",
-      "languageId": "c844f028-4351-41ab-be22-a5c1741cd859",
-      "mode": "both",
-      "Media": [
-        {
-          "id": "e74a61a1-a9c9-4ffd-9f8b-92fc00e84b9d",
-          "mediaLocation": "https://s3-us-west-2.amazonaws.com/voc-media/surveys/VOC+Intro_Master.wav"
-        }
-      ],
-      "TTS": null,
-      "Input": [
-        {
-          "input": "1",
-          "nextquestionId": "53b7b9d9-b7c6-43d8-8d67-9fbd743ecf34"
-        }, {
-          "input": "2",
-          "nextquestionId": "53b7b9d9-b7c6-43d8-8d67-9fbd743ecf34"
-        }, {
-          "input": "3",
-          "nextquestionId": "53b7b9d9-b7c6-43d8-8d67-9fbd743ecf34"
-        }, {
-          "input": "4",
-          "nextquestionId": "53b7b9d9-b7c6-43d8-8d67-9fbd743ecf34"
-        }, {
-          "input": "5",
-          "nextquestionId": "53b7b9d9-b7c6-43d8-8d67-9fbd743ecf34"
-        }
-      ]
-    }
-  ]
-}
 
 class CurrentSurveyPage extends Component {
 
@@ -82,7 +20,9 @@ class CurrentSurveyPage extends Component {
       detail: null,
       editStatus: false,
       id: props.global.data.surveyId,
-      surveyName: props.global.data.surveyName
+      surveyName: props.global.data.surveyName,
+      editUsername: props.global.data.surveyName,
+      editSurveyname: props.global.data.surveyDescription
     }
   }
 
@@ -225,26 +165,17 @@ class CurrentSurveyPage extends Component {
       "TTS": null,
       "surveyId": this.state.id,
       "surveyName": this.state.surveyName,
-      "Input": [
+      "Logic": [
         {
           "input": "1",
-          "nextquestionId": "586cc7c8-41a1-4fee-96aa-d17a6b1173b3"
+          "nextquestionId": "0dadadcd-da55-472f-92a3-4f1366af15b6"
         }, {
           "input": "2",
-          "nextquestionId": "586cc7c8-41a1-4fee-96aa-d17a6b1173b3"
-        }, {
-          "input": "3",
-          "nextquestionId": "586cc7c8-41a1-4fee-96aa-d17a6b1173b3"
-        }, {
-          "input": "4",
-          "nextquestionId": "586cc7c8-41a1-4fee-96aa-d17a6b1173b3"
-        }, {
-          "input": "5",
-          "nextquestionId": "586cc7c8-41a1-4fee-96aa-d17a6b1173b3"
+          "nextquestionId": "0dadadcd-da55-472f-92a3-4f1366af15b6"
         }
       ]
     }
-    console.log('NEW_QUESTION=', newQuestion)
+    console.log('NEW_QUESTION=', JSON.stringify(newQuestion))
 
     /* var currentSurvey = Object.assign({}, this.state.detail)
     if (currentSurvey.Questions == null)
@@ -331,7 +262,41 @@ class CurrentSurveyPage extends Component {
       }
     
     this.updateQuestion(newQuestionData)
+
+  }
+
+  enableNextQuestion = (questionId, tagNumber) => {
     
+    let question = this.state.detail.Questions[questionId]
+    //question.Questions.
+    this.initialize();
+  }
+
+  disableNextQuestion = (questionId, tagNumber) => {
+
+    this.initialize();
+  }
+
+  setNextQuestion = (questionId, tagNumber) => {
+
+    this.initialize();
+  }
+
+  saveSurvey = () => {
+    let newSurvey = Object.assign({}, this.state.detail)
+    newSurvey.name = this.state.editUsername
+    newSurvey.description = this.state.editSurveyname
+    newSurvey.created = new Date().toString()
+    this.setState({editStatus: false, detail: null})
+    return fetch('https://mirth-service.staging.agentacloud.com:8881/survey', {
+      method: 'POST',
+      body: JSON.stringify(newSurvey)
+    }).then((response) => response.json()).then((response) => {
+      this.loadDataFromServer()
+    }).catch((error) => {
+      console.error('getQuestion api error --: ', error);
+    });
+
   }
 
   render() {
@@ -343,7 +308,7 @@ class CurrentSurveyPage extends Component {
           let media = this.state.allQuestions[i].Media
           if (this.state.selectedQuestion == i) 
             questionList.push(
-              <tr className="active">
+              <tr className="active" key={i}>
                 <td>{media == null
                     ? 'No Audio'
                     : this.extractFileName(media.mediaLocation)}</td>
@@ -355,6 +320,7 @@ class CurrentSurveyPage extends Component {
               tts = this.state.allQuestions[i].TTS.script
             questionList.push(
               <tr
+                key={i}
                 onClick={() => this.setState({selectedQuestion: i, description: this.state.allQuestions[i].description, tts: tts})}>
                 <td>{media == null
                     ? 'No Audio'
@@ -374,7 +340,8 @@ class CurrentSurveyPage extends Component {
         var introItem,
           introIndex,
           closingItem,
-          closingIndex
+          closingIndex,
+          introTag
 
         for (let i = 0; item.Language != null && i < item.Language.length; i++) {
           if (i == 0) 
@@ -392,69 +359,81 @@ class CurrentSurveyPage extends Component {
               </button>
             )
         }
+
+        let options = []
+
+        for (let optNum = 1; optNum < this.state.detail.Questions.length - 1; optNum++) {
+          options.push(
+            <option value={this.state.detail.Questions[optNum + 1].id}>Question{optNum}</option>
+          )
+        }
         for (let i = 0; item.Questions != null && i < item.Questions.length; i++) {
           const question = item.Questions[i]
-          if (question.type == "intro") {
-            introItem = question
-            introIndex = i
-            continue
-          }
           if (question.type == "closing") {
             closingItem = question
             closingIndex = i
             continue
           }
           let questionTag = []
-          let options = []
-          if (question.Input != null) {
-            for (let optNum = 0; optNum < question.Input.length; optNum++) {
-              options.push(
-                <option>{question.Input[optNum].input}</option>
+
+          if (question.Input == null) 
+            question.Input = []
+
+          let enabledTags = question
+            .Input
+            .map(tag => parseInt(tag.input))
+          for (let j = 0; j < 10; j++) {
+            //const tag = question.Input[j]
+            var tagNumber = (j == 9)
+              ? 0
+              : j + 1
+            if (enabledTags.indexOf(tagNumber) >= 0) 
+              questionTag.push(
+                <li key={j}>
+                  <span className="text-lightblue">{tagNumber}</span>
+                  <label className="switch">
+                    <input
+                      type="checkbox"
+                      checked={true}
+                      onChange={() => this.disableNextQuestion(i, tagNumber)}/>
+                    <span className="slider-round"></span>
+                  </label>
+                  <span className="text-lightblue">Go to</span>
+
+                  <select
+                    value={'Question1'}
+                    style={{
+                    marginLeft: '5px',
+                    borderColor: 'transparent',
+                    color: 'white',
+                    backgroundColor: 'rgb(34,152,209)'
+                  }}
+                    id={"sel"+i+"_"+tagNumber}
+                    onChange={()=>this.setNextQuestion(i,tagNumber)}>
+                    {options}
+                  </select>
+                </li>
+              )
+            else {
+              questionTag.push(
+                <li key={j}>
+                  <span className="text-lightblue">{tagNumber}</span>
+                  <label className="switch">
+                    <input
+                      type="checkbox"
+                      checked={false}
+                      onChange={() => this.enableNextQuestion(i, tagNumber)}/>
+                    <span className="slider-round"></span>
+                  </label>
+                </li>
               )
             }
-            for (let j = 0; j < question.Input.length; j++) {
-              const tag = question.Input[j]
-              if (tag.enabled != false) 
-                questionTag.push(
-                  <li key={j}>
-                    <span className="text-lightblue">{tag.input}</span>
-                    <label className="switch">
-                      <input
-                        type="checkbox"
-                        checked={true}
-                        onChange={() => this.props.dispatch({type: 'TOGGLE_QUESTION', questionIndex: i, tagIndex: j})}/>
-                      <span className="slider-round"></span>
-                    </label>
-                    <span className="text-lightblue">Go to</span>
-
-                    <select
-                      value={tag.Next}
-                      style={{
-                      marginLeft: '5px',
-                      borderColor: 'transparent',
-                      color: 'white',
-                      backgroundColor: 'rgb(34,152,209)'
-                    }}
-                      id="sel1">
-                      {options}
-                    </select>
-                  </li>
-                )
-              else {
-                questionTag.push(
-                  <li key={j}>
-                    <span className="text-lightblue">{tag.input}</span>
-                    <label className="switch">
-                      <input
-                        type="checkbox"
-                        checked={false}
-                        onChange={() => this.props.dispatch({type: 'TOGGLE_QUESTION', questionIndex: i, tagIndex: j})}/>
-                      <span className="slider-round"></span>
-                    </label>
-                  </li>
-                )
-              }
-            }
+          }
+          if (question.type == "intro") {
+            introItem = question
+            introIndex = i
+            introTag = questionTag
+            continue
           }
           questions.push(
             <div className="questions" key={i}>
@@ -524,7 +503,24 @@ class CurrentSurveyPage extends Component {
               <div className="new-voice-survey">
                 <div className="row">
                   <div className="col-8">
-                    <h4>{item.name}</h4>
+                    {!this.state.editStatus
+                      ? <h4>{item.name}</h4>
+                      : <h4><input
+                        type="text"
+                        value={this.state.editUsername}
+                        placeholder="Input New Username"
+                        onChange={(val) => {
+                        this.setState({editUsername: val.target.value});
+                      }}
+                        ref={(r) => (this.username = r)}
+                        style={{
+                        flex: 1,
+                        width: '253px',
+                        fontSize: 15
+                      }}/>
+                      </h4>
+}
+
                   </div>
                   <div className="col-4">
                     {!this.state.editStatus
@@ -540,7 +536,7 @@ class CurrentSurveyPage extends Component {
                       : <button
                         className="btn btn-save float-right"
                         type="button"
-                        onClick={() => this.setState({editStatus: false})}>
+                        onClick={this.saveSurvey}>
                         <span>SAVE</span>
                       </button>
 }
@@ -557,7 +553,25 @@ class CurrentSurveyPage extends Component {
                     <span className="mr-3">{item.Author[0].name}</span>
                     <a className="show-history" href="#">Show History</a>
                   </p>
-                  <p className="bg-lightgray">{item.description}</p>
+
+                  {!this.state.editStatus
+                    ? <p className="bg-lightgray">{item.description}</p>
+                    : <p className="bg-lightgray"><input
+                      className="bg-lightgray"
+                      type="text"
+                      value={this.state.editSurveyname}
+                      placeholder="Input New SurveyName"
+                      onChange={(val) => {
+                      this.setState({editSurveyname: val.target.value});
+                    }}
+                      ref={(r) => (this.surveyName = r)}
+                      style={{
+                      width: '440px',
+                      flex: 1,
+                      fontSize: 15
+                    }}/>
+                    </p>
+}
                   {languageItems}
                   <button className="btn bg-lightblue btn-settings" type="button">
                     <i className="fa fa-plus-circle"></i>
@@ -566,47 +580,58 @@ class CurrentSurveyPage extends Component {
                 </div>
               </div>
               <div className="row">
-                {introItem != null && <div className="col-sm-6">
-                  <div className="intro-outro">
+                {introItem != null && <div className="col-sm-12">
+                  <div className="questions">
                     <h4>{introItem.description}</h4>
                     <div className="cont">
-                      <h6 className="mb-1">{introItem.Media == null
-                          ? 'NO AUDIO'
-                          : 'AUDIO - DEFAULT'}</h6>
-                      <p className="audio-name mb-1">{introItem.Media == null
-                          ? 'Press Setting Button to Add Audio'
-                          : this.extractFileName(introItem.Media[0].mediaLocation)}</p>
                       <div className="row">
-                        <div className="col-sm-9">
-                          <audio id={introIndex} controls>
-                            <source
-                              id={'source' + introIndex}
-                              src={introItem.Media == null
-                              ? null
-                              : introItem.Media[0].mediaLocation}
-                              type="audio/wav"/>
-                            Your browser does not support the audio element.
-                          </audio>
+                        <div className="col-sm-6 col-md-7 pr-sm-0">
+
+                          <h6 className="mb-1">{introItem.Media == null
+                              ? 'NO AUDIO'
+                              : 'AUDIO - DEFAULT'}</h6>
+                          <p className="audio-name mb-1">{introItem.Media == null
+                              ? 'Press Setting Button to Add Audio'
+                              : this.extractFileName(introItem.Media[0].mediaLocation)}</p>
+                          <div className="row">
+                            <div className="col-sm-9">
+                              <audio id={introIndex} controls>
+                                <source
+                                  id={'source' + introIndex}
+                                  src={introItem.Media == null
+                                  ? null
+                                  : introItem.Media[0].mediaLocation}
+                                  type="audio/wav"/>
+                                Your browser does not support the audio element.
+                              </audio>
+                            </div>
+                            <div
+                              className="col-sm-1"
+                              onClick={() => {
+                              this.setState({modal: true, currentQuestion: introItem, questionId: introIndex})
+                            }}>
+                              <i
+                                className="fa fa-cog"
+                                style={{
+                                fontSize: 25,
+                                marginTop: '8px',
+                                color: 'black'
+                              }}></i>
+                            </div>
+                          </div>
+                          <h6 className="mt-4">TTS</h6>
+                          {introItem.TTS != null && <p className="bg-lightgray p-tts">{introItem.TTS[0].script}</p>}
                         </div>
-                        <div
-                          className="col-sm-1"
-                          onClick={() => {
-                          this.setState({modal: true, currentQuestion: introItem, questionId: introIndex})
-                        }}>
-                          <i
-                            className="fa fa-cog"
-                            style={{
-                            fontSize: 25,
-                            marginTop: '8px',
-                            color: 'black'
-                          }}></i>
+                        <div className="col-sm-6 col-md-5">
+                          <ul className="list-unstyled">
+                            {introTag}
+                          </ul>
                         </div>
                       </div>
-                      <h6 className="mt-4">TTS</h6>
-                      {introItem.TTS != null && <p className="bg-lightgray p-tts">{introItem.TTS[0].script}</p>}
                     </div>
                   </div>
-                </div>}
+
+                </div>} 
                 {closingItem != null && <div className="col-sm-6">
                   <div className="intro-outro">
                     <h4>{closingItem.description}</h4>
@@ -700,7 +725,7 @@ class CurrentSurveyPage extends Component {
                           controls
                           style={{
                           position: 'absolute',
-                          left: -500,
+                          left: -1500,
                           right: 0
                         }}>
                           <source id='previewSource'/>

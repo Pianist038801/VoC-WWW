@@ -7,7 +7,7 @@ export class ProgressView extends React.Component {
         super(props);
 
         // initialize state
-        this.state = { visible: props.visible };
+        this.state = { visible: true };
     }
 
     render() {
