@@ -63,7 +63,7 @@ class SurveyPage extends Component {
      
     this.setState({surveys: null})
     var newSurvey = {
-      name: "Daiki",
+      name: "QQQ",
       description: "New Survey",
       type: "voice",
       orgId: "c56fa81c-d579-448d-82e8-6da2e5fbec7a",

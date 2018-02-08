@@ -165,15 +165,7 @@ class CurrentSurveyPage extends Component {
       "TTS": null,
       "surveyId": this.state.id,
       "surveyName": this.state.surveyName,
-      "Logic": [
-        {
-          "input": "1",
-          "nextquestionId": "0dadadcd-da55-472f-92a3-4f1366af15b6"
-        }, {
-          "input": "2",
-          "nextquestionId": "0dadadcd-da55-472f-92a3-4f1366af15b6"
-        }
-      ]
+      "Logic": null
     }
     console.log('NEW_QUESTION=', JSON.stringify(newQuestion))
 
@@ -266,21 +258,80 @@ class CurrentSurveyPage extends Component {
   }
 
   enableNextQuestion = (questionId, tagNumber) => {
-    
+    console.log('QuestionId + TagNumber', questionId, '-', tagNumber)
+    if(this.state.detail.Questions.length <= 2) return // actual question must exist
+
     let question = this.state.detail.Questions[questionId]
-    //question.Questions.
-    this.initialize();
+    question.Logic = [{
+      "input": tagNumber.toString(),
+      "nextquestionId": this.state.detail.Questions[2].id // set default as Question1 
+  }]
+  if(question.Media!=null)
+  {
+    question.Media = question.Media[0]
   }
-
-  disableNextQuestion = (questionId, tagNumber) => {
-
-    this.initialize();
+  if(question.TTS!=null)
+  {
+    question.TTS = question.TTS[0]
+  }
+  console.log('enableNextQuestion', question)
+    return fetch('https://mirth-service.staging.agentacloud.com:8877/question', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(question)
+    }).then((response) => response.json())
+    .then(response=> {
+      console.log('Enable NEXT RESPONSE', response)
+      this.initialize()
+    }).catch((error) => {
+      console.error('enable next api error --: ', error);
+    });
   }
 
   setNextQuestion = (questionId, tagNumber) => {
+    let question = this.state.detail.Questions[questionId]
+    const selectId = "sel" + questionId + "_" + tagNumber
+    var nextId = document.getElementById(selectId).value;
+    let inputQuestion = this.state.allQuestions.find(function check(q){return q.id == question.id })
 
-    this.initialize();
+    let inputId = inputQuestion.Logic.find(function check(input){return input.input == tagNumber.toString()}).id
+    if(question.Media!=null)
+    {
+      question.Media = question.Media[0]
+    }
+    if(question.TTS!=null)
+    {
+      question.TTS = question.TTS[0]
+    }
+//    question.Media = undefined
+    question.Logic = [{
+      "id": inputId,
+      "input": tagNumber.toString(),
+      "nextquestionId": nextId
+    }]
+
+    return fetch('https://mirth-service.staging.agentacloud.com:8877/question', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(question)
+    }).then((response) => {
+      console.log('Set NEXT RESPONSE', response)
+      this.initialize()
+    }).catch((error) => {
+      console.error('enable next api error --: ', error);
+    });
   }
+
+  disableNextQuestion = (questionId, tagNumber) => {
+    alert('disable')
+    //this.initialize();
+  } 
 
   saveSurvey = () => {
     let newSurvey = Object.assign({}, this.state.detail)
@@ -384,10 +435,14 @@ class CurrentSurveyPage extends Component {
             .map(tag => parseInt(tag.input))
           for (let j = 0; j < 10; j++) {
             //const tag = question.Input[j]
-            var tagNumber = (j == 9)
+            let tagNumber = (j == 9)
               ? 0
               : j + 1
+
             if (enabledTags.indexOf(tagNumber) >= 0) 
+            { 
+              let defaultNextQuestionId = question.Input.find(function(input){return input.input == tagNumber.toString()})
+              defaultNextQuestionId = defaultNextQuestionId.nextquestionId
               questionTag.push(
                 <li key={j}>
                   <span className="text-lightblue">{tagNumber}</span>
@@ -401,7 +456,7 @@ class CurrentSurveyPage extends Component {
                   <span className="text-lightblue">Go to</span>
 
                   <select
-                    value={'Question1'}
+                    value={ defaultNextQuestionId }
                     style={{
                     marginLeft: '5px',
                     borderColor: 'transparent',
@@ -414,6 +469,7 @@ class CurrentSurveyPage extends Component {
                   </select>
                 </li>
               )
+            }
             else {
               questionTag.push(
                 <li key={j}>
@@ -744,7 +800,8 @@ class CurrentSurveyPage extends Component {
                             className="fa fa-play-circle text-lightblue"
                             onClick={() => {
                             if (this.state.allQuestions[this.state.selectedQuestion].Media == null) 
-                              return this.setState({playPreview: true});
+                              return 
+                            this.setState({playPreview: true});
                             var source = document.getElementById('previewSource');
                             source.src = this.state.allQuestions[this.state.selectedQuestion].Media.mediaLocation;
                             var audio = document.getElementById("preview");
