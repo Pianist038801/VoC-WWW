@@ -157,7 +157,7 @@ class CurrentSurveyPage extends Component {
   addQuestion = () => {
     var newQuestion = {
       "type": "1",
-      "order": 1,
+      "order": this.state.detail.Questions.length ,
       "description": "New Question",
       "mode": "both",
       "languageId": "c844f028-4351-41ab-be22-a5c1741cd859",
@@ -383,6 +383,7 @@ class CurrentSurveyPage extends Component {
       }
 
       const item = this.state.detail
+      item.Questions.sort((left, right) => {return left.order - right.order})
         //const item = this.state.detail
         if (item == null) 
           return <ProgressView ref={e => this.progressView = e}/>
