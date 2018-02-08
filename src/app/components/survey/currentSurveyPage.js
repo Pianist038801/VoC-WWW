@@ -285,14 +285,13 @@ class CurrentSurveyPage extends Component {
     */
 
     return fetch('https://mirth-service.staging.agentacloud.com:8877/question', {
-      method: 'POST', 
+      method: 'POST',
       body: JSON.stringify(newQuestion)
-    }).then((response) => response.json()).then(response=>{
+    }).then((response) => response.json()).then(response => {
       console.log('SAVE RESPONSE', response) // load
       // var source = document.getElementById('source' + this.state.questionId)
-      // source.src = question.Media.mediaLocation
-      // var audio = document.getElementById(this.state.questionId);
-      // audio.load();
+      // source.src = question.Media.mediaLocation var audio =
+      // document.getElementById(this.state.questionId); audio.load();
       this.initialize()
     }).catch((error) => {
       console.error('survey api error --:', error);
@@ -330,46 +329,9 @@ class CurrentSurveyPage extends Component {
       newQuestionData.Media = {
         mediaLocation: this.state.allQuestions[this.state.selectedQuestion].Media.mediaLocation
       }
-    console.log('UpdateRequest=', JSON.stringify(newQuestionData))
-    var _survey =  {
-      "type": "1",
-      "order": 1,
-      "description": "New Question",
-      "mode": "both",
-      "languageId": "c844f028-4351-41ab-be22-a5c1741cd859",
-      "Media": 
-        {
-          "mediaLocation": "https://voc-media.s3.us-west-2.amazonaws.com/surveys/testaudio/DaikiAudio.mp3"
-        }
-      ,
-      "TTS": 
-        {
-          "script": "New TTS"
-        }
-      ,
-      "surveyId": "2604ccca-a9f7-4539-8466-7e4de3ea02e3",
-      "surveyName": "TESTING",
-      "Input": [
-        {
-          "input": "1",
-          "nextquestionId": "586cc7c8-41a1-4fee-96aa-d17a6b1173b3"
-        }, {
-          "input": "2",
-          "nextquestionId": "586cc7c8-41a1-4fee-96aa-d17a6b1173b3"
-        }, {
-          "input": "3",
-          "nextquestionId": "586cc7c8-41a1-4fee-96aa-d17a6b1173b3"
-        }, {
-          "input": "4",
-          "nextquestionId": "586cc7c8-41a1-4fee-96aa-d17a6b1173b3"
-        }, {
-          "input": "5",
-          "nextquestionId": "586cc7c8-41a1-4fee-96aa-d17a6b1173b3"
-        }
-      ]
-    } 
-    //this.updateQuestion(newQuestionData)
-    this.updateQuestion(_survey)
+    
+    this.updateQuestion(newQuestionData)
+    
   }
 
   render() {
