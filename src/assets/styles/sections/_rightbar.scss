@@ -1,70 +1,68 @@
 .right-bar {
-	background: url(../images/navigation-bg.jpg) center top no-repeat;
-	background-size: cover;
-	position: fixed;
-	z-index: 9;
-	width: 300px;
-	height: 100%;
-	color: #fff;
-	top: 0;
-	left: 0;
-	overflow: auto; 
-	transition: left 0.4s;
+  background: url(../images/navigation-bg.jpg) center top no-repeat;
+  background-size: cover;
+  position: fixed;
+  z-index: 9;
+  width: 300px;
+  height: 100%;
+  color: #fff;
+  top: 0;
+  left: 0;
+  overflow: auto;
+  transition: left 0.4s;
 
-	&.active {
-		left: 0;
-	}
+  &.active {
+    left: 0;
+  }
 
-	.logo {
-	  width: 139px;
-	  height: 38px;
-	  background: url(../images/logo.png) center top no-repeat;
-	  margin: 50px 0 150px 65px;	
-		
-		a {
-			width: 139px;
-		  height: 38px;
-		}	  
-	}
+  .logo {
+    width: 139px;
+    height: 38px;
+    background: url(../images/logo.png) center top no-repeat;
+    margin: 50px 0 150px 65px;
 
-	ul {
-		margin-bottom: 100px;
+    a {
+      width: 139px;
+      height: 38px;
+    }
+  }
 
-		li a {
-			display: block;
-			color: #fff;
-			padding: 6px 0;
-			font-weight: 500;
-			padding-left: 90px;
+  ul {
+    margin-bottom: 100px;
 
-			&.active {
-				color: #fff!important;
-				background-color: #2082a3!important;	
+    li a {
+      display: block;
+      color: #fff;
+      padding: 6px 0;
+      font-weight: 500;
+      padding-left: 90px;
 
-				&:after {
-					font-family: "Fontawesome";
-					content: "\f054";
-					font-size: 1.5em;
-					margin: -4px 8px 0 0;
-					float: right;	
-				}
-			}
+      &.active {
+        color: #fff !important;
+        background-color: #2082a3 !important;
 
-			&:hover {
-				text-decoration: none;
-				color: #2082a3;
-			}
-		}
-	}
-	.highlight{
-		background:cadetblue
-	}
+        &:after {
+          font-family: 'Fontawesome';
+          content: '\f054';
+          font-size: 1.5em;
+          margin: -4px 8px 0 0;
+          float: right;
+        }
+      }
+
+      &:hover {
+        text-decoration: none;
+        color: #2082a3;
+      }
+    }
+  }
+  .highlight {
+    background: cadetblue;
+  }
 }
 
 @include bootstrap-md-breakpoint () {
-	.right-bar {
-		left: -300px;
-	}
+  .right-bar {
+    left: -300px;
+  }
 }
-
-

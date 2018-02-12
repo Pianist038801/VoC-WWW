@@ -16,7 +16,6 @@ $lightgreen01-color: #43d67e;
 $lightgreen02-color: #56e82e;
 $lightorange01-color: #f09512;
 
-
 /* ----- Bootstrap breakpoints ----- */
 $bootstrap-lg-breakpoint: 1199px;
 $bootstrap-md-breakpoint: 991px;
@@ -51,7 +50,11 @@ $bootstrap-xs-breakpoint: 575px;
   }
 }
 
-@include bootstrap-lg-breakpoint () {}
-@include bootstrap-md-breakpoint () {}
-@include bootstrap-sm-breakpoint () {}
-@include bootstrap-xs-breakpoint () {}
+@include bootstrap-lg-breakpoint () {
+}
+@include bootstrap-md-breakpoint () {
+}
+@include bootstrap-sm-breakpoint () {
+}
+@include bootstrap-xs-breakpoint () {
+}

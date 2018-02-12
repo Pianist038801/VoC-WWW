@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches with the last snapshot 1`] = `
+<div>
+  <section
+    className="sidebar"
+  >
+    <a
+      href="#"
+    >
+      <h1
+        className="logo"
+      >
+        <span>
+          Agenta
+        </span>
+      </h1>
+    </a>
+    <ul
+      className="list-unstyled"
+    >
+      <li>
+        <a
+          href="#"
+        >
+          VOICE OF THE CUSTOMER
+        </a>
+      </li>
+      <li>
+        <Link
+          className="active"
+          onClick={[Function]}
+          onlyActiveOnIndex={false}
+          style={Object {}}
+          to="campaigns"
+        >
+          CAMPAIGNS
+        </Link>
+      </li>
+      <li>
+        <Link
+          className=""
+          onClick={[Function]}
+          onlyActiveOnIndex={false}
+          style={Object {}}
+          to="surveys"
+        >
+          SURVEYS
+        </Link>
+      </li>
+      <li>
+        <Link
+          className=""
+          onClick={[Function]}
+          onlyActiveOnIndex={false}
+          style={Object {}}
+          to="#"
+        >
+          AUDIENCE
+        </Link>
+      </li>
+      <li>
+        <Link
+          className=""
+          onClick={[Function]}
+          onlyActiveOnIndex={false}
+          style={Object {}}
+          to="#"
+        >
+          QUESTIONS
+        </Link>
+      </li>
+      <li>
+        <Link
+          className=""
+          onClick={[Function]}
+          onlyActiveOnIndex={false}
+          style={Object {}}
+          to="#"
+        >
+          REPORTING
+        </Link>
+      </li>
+      <li>
+        <Link
+          className=""
+          onClick={[Function]}
+          onlyActiveOnIndex={false}
+          style={Object {}}
+          to="blacklist"
+        >
+          DO NOT CALL LIST
+        </Link>
+      </li>
+    </ul>
+  </section>
+</div>
+`;

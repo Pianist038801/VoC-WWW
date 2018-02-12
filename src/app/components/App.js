@@ -1,6 +1,6 @@
-import React from "react";
-import NavigationBar from "./NavigationBar";
-import SidebarMenu from './sidebarMenu';
+import React from 'react';
+import NavigationBar from './NavigationBar';
+import SidebarMenu from './SidebarMenu';
 import FlashMessagesList from './flash/FlashMessagesList';
 //import '../styles/style.css';
 

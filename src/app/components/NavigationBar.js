@@ -1,10 +1,9 @@
-import React from "react";
-import { Link } from "react-router";
-import { connect } from "react-redux";
+import React from 'react';
+import { Link } from 'react-router';
+import { connect } from 'react-redux';
 import { logout } from '../actions/authActions';
 
-class NavigationBar extends React.Component {
-
+export class NavigationBar extends React.Component {
   logout(e) {
     e.preventDefault();
     this.props.logout();
@@ -13,11 +12,12 @@ class NavigationBar extends React.Component {
   render() {
     const { isAuthenticated } = this.props.auth;
 
-
     const userLinks = (
       <ul className="navbar navbar-nav navbar-right list-group">
         <li className="list-group-item">
-          <a href="#" onClick={this.logout.bind(this)}>Logout</a>
+          <a href="#" onClick={this.logout.bind(this)}>
+            Logout
+          </a>
         </li>
       </ul>
     );
@@ -25,10 +25,14 @@ class NavigationBar extends React.Component {
     const guestLinks = (
       <ul className="navbar navbar-nav navbar-right list-group">
         <li>
-          <Link to="signup" className="list-group-item">SignUp</Link>
+          <Link to="signup" className="list-group-item">
+            SignUp
+          </Link>
         </li>
         <li>
-          <Link to="login" className="list-group-item">Login</Link>
+          <Link to="login" className="list-group-item">
+            Login
+          </Link>
         </li>
       </ul>
     );
@@ -36,11 +40,10 @@ class NavigationBar extends React.Component {
     return (
       <nav className="navbar navbar-default">
         <div className="container-fluid">
-          <div className="navbar-header">
-          </div>
+          <div className="navbar-header" />
           <div className="collapse navbar-collapse" />
-            {isAuthenticated ? userLinks : guestLinks}
-          </div>
+          {isAuthenticated ? userLinks : guestLinks}
+        </div>
       </nav>
     );
   }

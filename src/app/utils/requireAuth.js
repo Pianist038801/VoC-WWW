@@ -4,38 +4,35 @@ import { addFlashMessage } from '../actions/flashMessages';
 
 export default function(ComposedComponent) {
   class Authenticate extends React.Component {
-    
     componentWillMount() {
-      if(!this.props.isAuthenticated) {
+      if (!this.props.isAuthenticated) {
         this.props.addFlashMessage({
           type: 'error',
           text: 'Please login to access this page'
         });
-       this.context.router.push('/login'); 
-      }   
+        this.context.router.push('/login');
+      }
     }
 
     componentWillUpdate(nextProps) {
-      if(!nextProps.isAuthenticated) {
+      if (!nextProps.isAuthenticated) {
         this.context.router.push('/');
       }
     }
 
     render() {
-      return(
-        <ComposedComponent {...this.props} />
-      );
+      return <ComposedComponent {...this.props} />;
     }
   }
 
   Authenticate.propTypes = {
     isAuthenticated: React.PropTypes.bool.isRequired,
     addFlashMessage: React.PropTypes.func.isRequired
-  }
+  };
 
   Authenticate.contextTypes = {
     router: React.PropTypes.object.isRequired
-  }
+  };
 
   function mapStateToProps(state) {
     return {
@@ -43,7 +40,5 @@ export default function(ComposedComponent) {
     };
   }
 
-  return connect(mapStateToProps, {addFlashMessage})(Authenticate);
+  return connect(mapStateToProps, { addFlashMessage })(Authenticate);
 }
-
-

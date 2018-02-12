@@ -1,7 +1,7 @@
 [
   {
     "Name": "Campaign 1",
-    "CampaignID": "000001",
+    "CampaignID": "b7611fec-86b3-48a4-8005-f0d9512990c6",
     "Author": {
       "name": "John Willaims",
       "email": "John.Willaims@spinsci.com"
@@ -17,7 +17,7 @@
   },
   {
     "Name": "Campaign 2",
-    "CampaignID": "000002",
+    "CampaignID": "039124db-783a-4b8a-a11e-efed116465e2",
     "Author": {
       "name": "John Willaims",
       "email": "John.Willaims@spinsci.com"
@@ -33,7 +33,7 @@
   },
   {
     "Name": "Campaign 3",
-    "CampaignID": "000003",
+    "CampaignID": "35bf14fb-2b4e-4a0c-8274-342a79fc788b",
     "Author": {
       "name": "John Willaims",
       "email": "John.Willaims@spinsci.com"
@@ -49,7 +49,7 @@
   },
   {
     "Name": "Campaign 4",
-    "CampaignID": "000004",
+    "CampaignID": "22b0b29e-0397-42c1-95a5-2f270adce8a8",
     "Author": {
       "name": "John Willaims",
       "email": "John.Willaims@spinsci.com"

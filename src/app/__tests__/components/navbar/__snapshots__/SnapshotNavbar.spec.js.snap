@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches with the last snapshot 1`] = `
+<Connect(NavigationBar)
+  auth={
+    Object {
+      "isAuthenticated": true,
+    }
+  }
+/>
+`;

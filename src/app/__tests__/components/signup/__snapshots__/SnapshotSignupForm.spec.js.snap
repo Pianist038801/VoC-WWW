@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`matches with the last snapshot 1`] = `
+<form
+  className="sign"
+  onSubmit={[Function]}
+>
+  <h1
+    className="loginText"
+  >
+    Sign up
+  </h1>
+  <TextFieldGroup
+    checkUserExists={[Function]}
+    field="username"
+    label="Username"
+    onChange={[Function]}
+    type="text"
+    value=""
+  />
+  <TextFieldGroup
+    checkUserExists={[Function]}
+    field="email"
+    label="Email"
+    onChange={[Function]}
+    type="text"
+    value=""
+  />
+  <TextFieldGroup
+    field="password"
+    label="Password"
+    onChange={[Function]}
+    type="password"
+    value=""
+  />
+  <TextFieldGroup
+    field="passwordConfirmation"
+    label="Confirm password"
+    onChange={[Function]}
+    type="password"
+    value=""
+  />
+  <div
+    className="form-group"
+  >
+    <button
+      className="btn btn-primary btn-lg"
+      disabled={false}
+    >
+      Sign up
+    </button>
+  </div>
+</form>
+`;

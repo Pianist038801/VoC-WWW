@@ -2,20 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 class BlacklistPage extends Component {
-
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {};
   }
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   render() {
     return (
       <section className="left-section">
         <div className="navicon">
-          <i className="fa fa-bars"></i>
+          <i className="fa fa-bars" />
         </div>
         <div className="wrapper blacklist">
           <div className="row mb-2">
@@ -25,10 +23,11 @@ class BlacklistPage extends Component {
             <div className="col-8 pt-2">
               <div className="float-right">
                 <button type="button" className="btn bg-lightblue btn-edit">
-                  <i className="fa fa-plus-circle"></i><span>EDIT</span>
+                  <i className="fa fa-plus-circle" />
+                  <span>EDIT</span>
                 </button>
               </div>
-              <div className="clearfix"></div>
+              <div className="clearfix" />
             </div>
           </div>
 
@@ -120,6 +119,4 @@ class BlacklistPage extends Component {
   }
 }
 
-export default connect(null, {})(
-  BlacklistPage
-);
+export default connect(null, {})(BlacklistPage);

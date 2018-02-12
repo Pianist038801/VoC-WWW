@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 
-class SidebarMenu extends React.Component {
+export class SidebarMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,6 +15,7 @@ class SidebarMenu extends React.Component {
 
   render() {
     const { isAuthenticated } = this.props.auth;
+
     return (
       <div>
         {isAuthenticated && (

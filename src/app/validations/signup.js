@@ -1,36 +1,35 @@
-import Validator from "validator";
-import isEmpty from "lodash/isEmpty";
+import Validator from 'validator';
+import isEmpty from 'lodash/isEmpty';
 
 export default function validateInput(data) {
   let errors = {};
 
-
   if (Validator.isEmpty(data.username)) {
-    errors.username = "Username is required";
+    errors.username = 'Username is required';
   }
 
   if (Validator.isEmpty(data.email)) {
-    errors.email = "Email is required";
+    errors.email = 'Email is required';
   }
 
-  if(!Validator.isEmail(data.email)) {
-    errors.email = "Email is invalid";
+  if (!Validator.isEmail(data.email)) {
+    errors.email = 'Email is invalid';
   }
 
   if (Validator.isEmpty(data.password)) {
-    errors.password = "Password is required";
+    errors.password = 'Password is required';
   }
 
   if (Validator.isEmpty(data.passwordConfirmation)) {
-    errors.passwordConfirmation = "Password confirmation field is required";
+    errors.passwordConfirmation = 'Password confirmation field is required';
   }
 
-  if(!Validator.equals(data.password, data.passwordConfirmation)) {
+  if (!Validator.equals(data.password, data.passwordConfirmation)) {
     errors.passwordConfirmation = 'Passwords must match';
   }
 
   if (Validator.isEmpty(data.timezone)) {
-    errors.timezone = "This field is required";
+    errors.timezone = 'This field is required';
   }
 
   return {

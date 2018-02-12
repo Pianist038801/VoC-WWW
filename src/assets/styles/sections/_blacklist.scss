@@ -1,33 +1,33 @@
 .blacklist {
-	.btn-edit {
-		margin-top: 6px;
-		padding: 4px 21px;
-		border-radius: 8px;
+  .btn-edit {
+    margin-top: 6px;
+    padding: 4px 21px;
+    border-radius: 8px;
 
-		i {
-			margin-right: 6px;
-		}
-	}
+    i {
+      margin-right: 6px;
+    }
+  }
 
-	.cont {
-		padding: 16px 20px 50px;
+  .cont {
+    padding: 16px 20px 50px;
 
-		.bg-lightgray {
-			background-color: $lightgray05-color;
-			border-radius: 8px;
-			color: #fff;
-			padding: 2.5px 24px;
+    .bg-lightgray {
+      background-color: $lightgray05-color;
+      border-radius: 8px;
+      color: #fff;
+      padding: 2.5px 24px;
 
-			&.numbers {
-				padding: 2.5px 35px 2.5px 25px;
-				margin-right: 20px; 
-			}
-		}
+      &.numbers {
+        padding: 2.5px 35px 2.5px 25px;
+        margin-right: 20px;
+      }
+    }
 
-		.list-num {
-			margin-top: 27px;
-			max-width: 430px;
-			line-height: 21px;
-		}
-	}
+    .list-num {
+      margin-top: 27px;
+      max-width: 430px;
+      line-height: 21px;
+    }
+  }
 }

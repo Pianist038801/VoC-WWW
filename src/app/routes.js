@@ -3,9 +3,9 @@ import { Route, IndexRoute } from 'react-router';
 
 import App from './components/App';
 import Greetings from './components/Greetings';
-import CampaignsList from './components/campaign/campaignList';
-import CreateCampaign from './components/campaign/createCampaign';
-import CurrentCampaign from './components/campaign/currentCampaign';
+import CampaignsList from './components/campaign/CampaignList';
+import CreateCampaign from './components/campaign/CreateCampaign';
+import CurrentCampaign from './components/campaign/CurrentCampaign';
 import SurveyPage from './components/survey/surveyPage';
 import CurrentSurveyPage from './components/survey/currentSurveyPage';
 import BlacklistPage from './components/blacklist/blacklistPage';

@@ -1,181 +1,171 @@
 /* ----- Surveys ----- */
-.fa { 
-	cursor: pointer 
-}
-
-.datafile {
-	position:absolute;
-	top:0;
-	left:-99999em
-}
 .create-survey {
+  .btn-create-survey {
+    padding: 6px 20px 6px 16px;
+    border-radius: 8px;
 
-	.btn-create-survey {
-		padding: 6px 20px 6px 16px;
-		border-radius: 8px;
+    i {
+      margin-right: 6px;
+    }
+  }
 
-		i {
-			margin-right: 6px;
-		}
-	}
+  .cont {
+    padding: 25px 23px 25px;
+    max-width: 492px;
+  }
 
-	.cont {
-		padding: 25px 23px 25px;
-		max-width: 492px;
-	}
-
-	.list-unstyled {
-		line-height: 1.4;
-	}
+  .list-unstyled {
+    line-height: 1.4;
+  }
 }
 
 /* ----- New Voice Survey ----- */
 .new-voice-survey {
-	h4 {
-		border-radius: 8px;
-		background-color: $lightgray01-color;
-		max-width: 283px;
-		width: 100%;
-		padding: 8px 14px;
-	}
+  h4 {
+    border-radius: 8px;
+    background-color: $lightgray01-color;
+    max-width: 283px;
+    width: 100%;
+    padding: 8px 14px;
+  }
 
-	.cont {
-		padding: 23px 25px 25px;
-	}
+  .cont {
+    padding: 23px 25px 25px;
+  }
 
-	.btn {
-		color: #fff;
-	  border-radius: 8px;
+  .btn {
+    color: #fff;
+    border-radius: 8px;
 
-		&.btn-save {
-			background-color: $lightgreen01-color;
-	  	padding: 2px 20px;
-		  margin-top: 10px;
-		}
+    &.btn-save {
+      background-color: $lightgreen01-color;
+      padding: 2px 20px;
+      margin-top: 10px;
+    }
 
-		&.btn-settings {
-	  	padding: 2px 12px;
-	  	margin-right: 12px;
+    &.btn-settings {
+      padding: 2px 12px;
+      margin-right: 12px;
 
-			i {
-				font-size: 1.15em;
-				margin-right: 8px;
-			}
+      i {
+        font-size: 1.15em;
+        margin-right: 8px;
+      }
 
-			&.active {
-				background-color: $lightgray02-color;
-			}
-		}
-	}
+      &.active {
+        background-color: $lightgray02-color;
+      }
+    }
+  }
 
-	.text-lightblue {
-		position: absolute;
-		top: 15px;
-		right: 35px;
-	}
+  .text-lightblue {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+  }
 
-	.show-history {
-		color: $default-color;
-		text-decoration: underline;
+  .show-history {
+    color: $default-color;
+    text-decoration: underline;
 
-		&:hover {
-			text-decoration: none;
-		}
-	}
+    &:hover {
+      text-decoration: none;
+    }
+  }
 
-	.bg-lightgray {
-		padding: 8px 10px;
-		max-width: 470px;
-	}
+  .bg-lightgray {
+    padding: 8px 10px;
+    max-width: 470px;
+  }
 }
 
 /* ----- Into and Outro ----- */
 .intro-outro {
-	.cont {
-		max-width: 360px;
-		padding: 25px 24px 40px;
-	}
+  .cont {
+    max-width: 360px;
+    padding: 25px 24px 40px;
+  }
 }
 
 /* ----- Questions 1 and 2 ----- */
 .questions {
-	.close-circle {
-		width: 23px;
-		height: 23px;
-		padding: 2px 5px;
-		background-color: $lightblue01-color;
-		border-radius: 50%;
-		position: absolute;
-		top: -6px;
-		right: -6px;
-		cursor: pointer;
+  .close-circle {
+    width: 23px;
+    height: 23px;
+    padding: 2px 5px;
+    background-color: $lightblue01-color;
+    border-radius: 50%;
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    cursor: pointer;
 
-		i {
-			color: $lightblue02-color;
-			font-size: 1.2em;
-			line-height: 0;
-		}
+    i {
+      color: $lightblue02-color;
+      font-size: 1.2em;
+      line-height: 0;
+    }
 
-		&:hover {
-			opacity: 0.9;
-		}
-	}
+    &:hover {
+      opacity: 0.9;
+    }
+  }
 
-	.cont {
-		padding: 20px 17px 50px;
-		max-width: 595px;
+  .cont {
+    padding: 20px 17px 50px;
+    max-width: 595px;
 
-		&.active {
-			border: 2px solid $lightorange01-color;
-		}
-	}
+    &.active {
+      border: 2px solid $lightorange01-color;
+    }
+  }
 
-	.top-p {
-		max-width: 330px;
-		padding: 11px 35px 11px 9px;
-	}
+  .top-p {
+    max-width: 330px;
+    padding: 11px 35px 11px 9px;
+  }
 
-	.list-unstyled {
-		margin: 10px 0 0 12px;
+  .list-unstyled {
+    margin: 10px 0 0 12px;
 
-		li {
-			margin-bottom: 6px;
-			height: 24px;
-		}
-	}
+    li {
+      margin-bottom: 6px;
+      height: 24px;
+    }
+  }
 
-	.btn-question {
-	  border-radius: 4px;
-		padding: 2px 3px;
-	}
+  .btn-question {
+    border-radius: 4px;
+    padding: 2px 3px;
+  }
 }
 
-.btn-add-question {	
-	.btn  {
-		padding: 6px 30px;
-  	border-radius: 8px;
-	}
+.btn-add-question {
+  .btn {
+    padding: 6px 30px;
+    border-radius: 8px;
+  }
 }
 
 @include bootstrap-xs-breakpoint () {
-	.new-voice-survey {
-		.cont {
-			padding-top: 40px;
-		}
+  .new-voice-survey {
+    .cont {
+      padding-top: 40px;
+    }
 
-		.btn {
-			&.btn-settings {
-				margin: 0 0 5px;
-			}
-		}
-	}
+    .btn {
+      &.btn-settings {
+        margin: 0 0 5px;
+      }
+    }
+  }
 
-	.questions .cont {
-		max-width: 360px;
-	}
+  .questions .cont {
+    max-width: 360px;
+  }
 
-	.btn-add-question .btn {	
-		display: block;
-		margin-bottom: 10px;
-	}
+  .btn-add-question .btn {
+    display: block;
+    margin-bottom: 10px;
+  }
 }

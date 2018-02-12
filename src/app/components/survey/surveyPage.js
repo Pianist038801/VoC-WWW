@@ -60,7 +60,7 @@ class SurveyPage extends Component {
   }
 
   createSurvey = () => {
-     
+
     this.setState({surveys: null})
     var newSurvey = {
       name: "QQQ",
@@ -104,7 +104,7 @@ class SurveyPage extends Component {
     }
 
     return fetch('https://mirth-service.staging.agentacloud.com:8881/survey', {
-      method: 'POST', 
+      method: 'POST',
       body: JSON.stringify(newSurvey)
     }).then((response) => response.json()).then((response) => {
       console.log('Response', response);
